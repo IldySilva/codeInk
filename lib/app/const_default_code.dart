@@ -1,12 +1,23 @@
 const defaultCode =
-    '''const pluckDeep = key => obj => key.split('.').reduce((accum, key) => accum[key], obj)
+'''import 'package:flutter/material.dart';
 
-const compose = (...fns) => res => fns.reduce((accum, next) => next(accum), res)
+void main() {
+  runApp(const MyApp());
+}
 
-const unfold = (f, seed) => {
-  const go = (f, seed, acc) => {
-    const res = f(seed)
-    return res ? go(f, res[1], acc.concat([res[0]])) : acc
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Center(
+          child: Text('Hello, World!'),
+        ),
+      ),
+    );
   }
-  return go(f, seed, [])
-}''';
+}
+''';
