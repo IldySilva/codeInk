@@ -20,11 +20,13 @@ class Controller extends ChangeNotifier {
       text: defaultCode, // Initial code
       language: autoit);
 
+  static ValueNotifier<bool> showLineNumbers=ValueNotifier(true);
   static ValueNotifier<List<Color>> backgroundColor =
       ValueNotifier<List<Color>>([...gradients.first]);
   static ValueNotifier<double> padding = ValueNotifier(25);
   setColor(List<Color> newColor) {
     backgroundColor.value = newColor;
+    notifyListeners();
   }
 
   setPadding(double newPaddin) {
