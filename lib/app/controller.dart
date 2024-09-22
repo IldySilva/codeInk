@@ -16,10 +16,19 @@ class Controller extends ChangeNotifier {
   }
 
   static final textEditorController = CodeController(
+
       text: defaultCode, // Initial code
       language: autoit);
 
-  static ValueNotifier<List<Color>> backgroundColor = ValueNotifier<List<Color>>([...gradients.first]);
+  static ValueNotifier<List<Color>> backgroundColor =
+      ValueNotifier<List<Color>>([...gradients.first]);
+  static ValueNotifier<double> padding = ValueNotifier(25);
+  setColor(List<Color> newColor) {
+    backgroundColor.value = newColor;
+  }
 
-
+  setPadding(double newPaddin) {
+    padding.value = newPaddin;
+    notifyListeners();
+  }
 }

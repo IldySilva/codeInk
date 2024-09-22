@@ -15,13 +15,13 @@ class CodeEditor extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: WidgetsToImageWrapper(
         controller: widgetsToImageController,
-        child: ValueListenableBuilder(
-          builder: (context,value,_) {
+        child: ListenableBuilder(
+          builder: (context,value) {
             return Container(
             
-              decoration:  BoxDecoration(gradient: LinearGradient(colors: value)),
+              decoration:  BoxDecoration(gradient: LinearGradient(colors: Controller.backgroundColor.value)),
               child: Padding(
-                padding: const EdgeInsets.all(50.0),
+                padding:  EdgeInsets.all(Controller.padding.value),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: CodeTheme(
@@ -33,7 +33,7 @@ class CodeEditor extends StatelessWidget {
                 ),
               ),
             );
-          }, valueListenable: Controller.backgroundColor,
+          }, listenable: Controller(),
         ),
       ),
     );

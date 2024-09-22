@@ -9,7 +9,7 @@ import '../file_name_generator.dart';
 
 class CodeToolBar extends StatelessWidget {
   CodeToolBar({super.key});
-
+Controller controller=Controller();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,8 +46,8 @@ class CodeToolBar extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0, bottom: 8),
                   child: InkWell(
-                    onTap: (){
-                      Controller.backgroundColor.value=gradient;
+                    onTap: () {
+                     controller.setColor(gradient);
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(4),
@@ -83,7 +83,17 @@ class CodeToolBar extends StatelessWidget {
                   "Padding",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Slider.adaptive(min: 0, max: 100, value: 40, onChanged: (v) {})
+                ValueListenableBuilder(
+                  builder: (context,value,_) {
+                    return Slider.adaptive(
+                        min: 0,
+                        max: 100,
+                        value: value,
+                        onChanged: (v) {
+                          controller.setPadding(v);
+                        });
+                  }, valueListenable: Controller.padding,
+                )
               ],
             ),
           ),
