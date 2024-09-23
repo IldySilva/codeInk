@@ -38,6 +38,7 @@ dependencies:
   path:
   google_fonts:
   dotted_border:
+  flutter_box_transform:
   file_saver: ^0.2.14
   path_provider:
   flutter_code_editor:
