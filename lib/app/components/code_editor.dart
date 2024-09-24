@@ -23,19 +23,20 @@ class CodeEditor extends StatelessWidget {
             decoration: BoxDecoration(
                 gradient:
                 LinearGradient(colors: Controller.backgroundColor.value)),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: CodeTheme(
-                  data: CodeThemeData(styles: draculaTheme),
-                  child: CodeField(
-expands: true,
-                    gutterStyle: GutterStyle(
-                        background: Colors.transparent,
-                        showFoldingHandles: false,
-                        showErrors: false,
-                        showLineNumbers: Controller.showLineNumbers.value),
-                    controller: Controller.textEditorController,
-                  )),
+            child: Flexible(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: CodeTheme(
+                    data: CodeThemeData(styles: draculaTheme),
+                    child: CodeField(
+                      wrap: true,
+                      gutterStyle: GutterStyle(
+                          showFoldingHandles: false,
+                          showErrors: false,
+                          showLineNumbers: Controller.showLineNumbers.value),
+                      controller: Controller.textEditorController,
+                    )),
+              ),
             ),
           );
         },

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
-import 'package:highlight/languages/autoit.dart' show autoit;
+import 'package:highlight/languages/javascript.dart' show javascript;
 import 'package:print_script/app/const_default_gradients.dart';
 
 import 'const_default_code.dart';
@@ -18,7 +18,7 @@ class Controller extends ChangeNotifier {
   static final textEditorController = CodeController(
 
       text: defaultCode, // Initial code
-      language: autoit);
+      language: javascript);
 
   static ValueNotifier<bool> showLineNumbers=ValueNotifier(true);
   static ValueNotifier<List<Color>> backgroundColor =

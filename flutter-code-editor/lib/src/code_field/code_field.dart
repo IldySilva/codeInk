@@ -342,34 +342,13 @@ class _CodeFieldState extends State<CodeField> {
   Widget _wrapInScrollView(
     Widget codeField,
     TextStyle textStyle,
-    double minWidth,
   ) {
     final intrinsic = IntrinsicWidth(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: 0,
-              minWidth: minWidth,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: Text(longestLine, style: textStyle),
-            ), // Add extra padding
-          ),
-          widget.expands ? Expanded(child: codeField) : codeField,
-        ],
-      ),
+      child: Flexible(child: codeField),
     );
 
-    return SingleChildScrollView(
-      padding: EdgeInsets.only(
-        right: widget.padding.right,
-      ),
-      scrollDirection: Axis.horizontal,
-      controller: _horizontalCodeScroll,
+    return Padding(
+      padding: const EdgeInsets.only(left:16.0,right: 2),
       child: intrinsic,
     );
   }
@@ -424,23 +403,17 @@ class _CodeFieldState extends State<CodeField> {
       data: Theme.of(context).copyWith(
         textSelectionTheme: widget.textSelectionTheme,
       ),
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          // Control horizontal scrolling
-          return _wrapInScrollView(codeField, textStyle, constraints.maxWidth);
-        },
-      ),
+      child: _wrapInScrollView(codeField, textStyle),
     );
 
-    return FocusableActionDetector(
-      actions: widget.controller.actions,
-      shortcuts: _shortcuts,
-      child: Container(
-        decoration: widget.decoration,
-        color: _backgroundCol,
-        key: _codeFieldKey,
-        padding: const EdgeInsets.only(left: 8),
+    return Container(
+      decoration: widget.decoration,
+      color: _backgroundCol,
+      key: _codeFieldKey,
+      padding: const EdgeInsets.only(left: 8),
+      child: IntrinsicWidth(
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (widget.gutterStyle.showGutter) _buildGutter(),

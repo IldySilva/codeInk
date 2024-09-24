@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_box_transform/flutter_box_transform.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'components/code_editor.dart';
-import 'components/resizable_container.dart';
 import 'components/toolbar.dart';
 
 class App extends StatefulWidget {
@@ -34,6 +32,7 @@ class _AppState extends State<App> {
                     children: [
                       Expanded(
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left:20.0,top: 10),
@@ -45,9 +44,11 @@ class _AppState extends State<App> {
                           )),
                       Flexible(
                           flex: 8,
-                          child: Container(
-                            padding: const EdgeInsets.all(20),
-                            child: CodeEditor(),
+                          child: SingleChildScrollView(
+                            child: Container(
+                              padding: const EdgeInsets.all(20),
+                              child: CodeEditor(),
+                            ),
                           )),
                     ],
                   )),
