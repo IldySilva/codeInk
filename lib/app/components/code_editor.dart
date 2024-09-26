@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:print_script/app/controller.dart';
 
 import 'package:print_script/app/components/toolbar.dart';
 import 'package:print_script/app/theme/enum_theme_type.dart';
-import 'package:print_script/app/widget_to_image_wrapper.dart';
+import 'package:print_script/app/components/widget_to_image_wrapper.dart';
+import 'package:print_script/app/theme/language/enum_languages.dart';
+
+import '../theme/code_editor/flutter_code_editor.dart';
 
 class CodeEditor extends StatefulWidget {
   CodeEditor({super.key});
@@ -50,14 +52,19 @@ class _CodeEditorState extends State<CodeEditor> {
                         builder: (context,theme,_) {
                           return CodeTheme(
                               data: CodeThemeData(styles: theme.themeValue),
-                              child: CodeField(
-                                wrap: true,
-                                gutterStyle: GutterStyle(
-                                    showFoldingHandles: false,
-                                    showErrors: false,
-                                    showLineNumbers:
-                                        Controller.showLineNumbers.value),
-                                controller: Controller.textEditorController,
+                              child: Builder(
+                                builder: (context) {
+                                  return CodeField(
+                                    wrap: true,
+                                    gutterStyle: GutterStyle(
+                                        showFoldingHandles: false,
+                                        showErrors: false,
+                                        showLineNumbers:
+                                            Controller.showLineNumbers.value),
+                                    controller: CodeController(
+                                        text: Controller.code, language: Controller.selectedLanguage.value.languageValue)
+                                  );
+                                }
                               ));
                         }, valueListenable: Controller.selectedTheme,
                       ),
@@ -81,9 +88,6 @@ class _CodeEditorState extends State<CodeEditor> {
                               final box = (widget.key as GlobalKey)
                                   .currentContext!
                                   .findRenderObject() as RenderBox;
-                              print("Nova Altura da caixa");
-                              print(box.size.width);
-                              print(box.size.height);
                               containerHeight = box.size.height;
                               containerWidth = box.size.width;
                             }

@@ -3,10 +3,10 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:print_script/app/controller.dart';
-import 'package:print_script/app/widget_to_image_controller.dart';
-import 'package:flutter/cupertino.dart' as cuppertino;
-import '../const_default_gradients.dart';
-import '../file_name_generator.dart';
+import 'package:print_script/app/theme/language/enum_languages.dart';
+import 'package:print_script/app/utils/widget_to_image_controller.dart';
+import '../consts/const_default_gradients.dart';
+import '../utils/file_name_generator.dart';
 import '../theme/enum_theme_type.dart';
 
 class CodeToolBar extends StatelessWidget {
@@ -107,9 +107,9 @@ class CodeToolBar extends StatelessWidget {
               builder: (context, value, _) {
                 return DropdownButtonFormField2<ThemeType>(
                   decoration: const InputDecoration(
-                    labelText: 'Theme',
+                    label: Row(children: [Text("Theme"),Icon(Icons.palette)],),
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 2),
                   ),
                   isExpanded: true,
                   value: value,
@@ -127,12 +127,31 @@ class CodeToolBar extends StatelessWidget {
               },
               valueListenable: Controller.selectedTheme,
             ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                "Language",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+            const SizedBox(height: 20,),
+            ValueListenableBuilder(
+              builder: (context, value, _) {
+                return DropdownButtonFormField2<LanguageTypes>(
+                  decoration:  const InputDecoration(
+                    label: Row(children: [Text("Language"),Icon(Icons.language)],),
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                  ),
+                  isExpanded: true,
+                  value: value,
+                  onChanged: (LanguageTypes? newValue) {
+                    Controller.selectedLanguage.value = newValue!;
+                    Controller.selectedTheme.notifyListeners();
+                  },
+                  items: LanguageTypes.values
+                      .map<DropdownMenuItem<LanguageTypes>>((LanguageTypes theme) {
+                    return DropdownMenuItem<LanguageTypes>(
+                      value: theme,
+                      child: Text(theme.cleanName),
+                    );
+                  }).toList(),
+                );
+              },
+              valueListenable: Controller.selectedLanguage,
             ),
             ElevatedButton(
                 onPressed: () async {
