@@ -6,24 +6,14 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:highlight/highlight_core.dart';
-import 'package:meta/meta.dart';
 
 import '../../flutter_code_editor.dart';
-import '../autocomplete/autocompleter.dart';
 import '../code/code_edit_result.dart';
 import '../code/key_event.dart';
 import '../history/code_history_controller.dart';
 import '../history/code_history_record.dart';
-import '../search/controller.dart';
-import '../search/result.dart';
-import '../search/search_navigation_controller.dart';
-import '../search/settings_controller.dart';
 import '../single_line_comments/parser/single_line_comments.dart';
 import '../wip/autocomplete/popup_controller.dart';
-import 'actions/copy.dart';
-import 'actions/redo.dart';
-import 'actions/undo.dart';
-import 'search_result_highlighted_builder.dart';
 import 'span_builder.dart';
 
 class CodeController extends TextEditingController {
@@ -93,19 +83,8 @@ class CodeController extends TextEditingController {
   final _styleList = <TextStyle>[];
   final _modifierMap = <String, CodeModifier>{};
   late PopupController popupController;
-  final autocompleter = Autocompleter();
   late final historyController = CodeHistoryController(codeController: this);
 
-  @internal
-  late final searchController = CodeSearchController(codeController: this);
-
-  SearchSettingsController get _searchSettingsController =>
-      searchController.settingsController;
-  SearchNavigationController get _searchNavigationController =>
-      searchController.navigationController;
-
-  @internal
-  SearchResult fullSearchResult = SearchResult.empty;
 
   /// The last [TextSpan] returned from [buildTextSpan].
   ///
@@ -114,11 +93,6 @@ class CodeController extends TextEditingController {
   @visibleForTesting
   TextSpan? lastTextSpan;
 
-  late final actions = <Type, Action<Intent>>{
-    CopySelectionTextIntent: CopyAction(controller: this),
-    RedoTextIntent: RedoAction(controller: this),
-    UndoTextIntent: UndoAction(controller: this),
-  };
 
   CodeController({
     String? text,
@@ -146,11 +120,6 @@ class CodeController extends TextEditingController {
     fullText = text ?? '';
 
     addListener(_scheduleAnalysis);
-    addListener(_updateSearchResult);
-    _searchSettingsController.addListener(_updateSearchResult);
-    // This listener is called when search controller notifies about
-    // showing or hiding the search popup.
-    searchController.addListener(_updateSearchResult);
 
     // Create modifier map
     for (final el in modifiers) {
@@ -169,19 +138,6 @@ class CodeController extends TextEditingController {
     unawaited(analyzeCode());
   }
 
-  void _updateSearchResult() {
-    final result = searchController.search(
-      code,
-      settings: _searchSettingsController.value,
-    );
-
-    if (result == fullSearchResult) {
-      return;
-    }
-
-    fullSearchResult = result;
-    notifyListeners();
-  }
 
   void _scheduleAnalysis() {
     _debounce?.cancel();
@@ -226,7 +182,6 @@ class CodeController extends TextEditingController {
     }
 
     _language = language;
-    autocompleter.mode = language;
     _updateCode(_code.text);
     this.analyzer = analyzer;
     notifyListeners();
@@ -294,7 +249,6 @@ class CodeController extends TextEditingController {
 
   KeyEventResult _onKeyDownRepeat(KeyEvent event) {
     if (event.isCtrlF(HardwareKeyboard.instance.logicalKeysPressed)) {
-      showSearch();
       return KeyEventResult.handled;
     }
 
@@ -312,28 +266,7 @@ class CodeController extends TextEditingController {
     return KeyEventResult.ignored; // The framework will handle.
   }
 
-  void onEnterKeyAction() {
-    if (popupController.shouldShow) {
-      insertSelectedWord();
-      return;
-    }
 
-    final currentMatchIndex =
-        _searchNavigationController.value.currentMatchIndex;
-
-    if (searchController.shouldShow && currentMatchIndex != null) {
-      final fullSelection = code.hiddenRanges.recoverSelection(selection);
-      final currentMatch = fullSearchResult.matches[currentMatchIndex];
-
-      if (fullSelection.start == currentMatch.start &&
-          fullSelection.end == currentMatch.end) {
-        _searchNavigationController.moveNext();
-        return;
-      }
-    }
-
-    insertStr('\n');
-  }
 
   /// Inserts the word selected from the list of completions
   void insertSelectedWord() {
@@ -445,13 +378,6 @@ class CodeController extends TextEditingController {
 
     super.value = newValue;
 
-    if (hasTextChanged) {
-      autocompleter.blacklist = [newValue.wordAtCursor ?? ''];
-      autocompleter.setText(this, text);
-      unawaited(generateSuggestions());
-    } else if (hasSelectionChanged) {
-      popupController.hide();
-    }
   }
 
   void applyHistoryRecord(CodeHistoryRecord record) {
@@ -750,23 +676,6 @@ class CodeController extends TextEditingController {
     return text;
   }
 
-  Future<void> generateSuggestions() async {
-    final prefix = value.wordToCursor;
-    if (prefix == null) {
-      popupController.hide();
-      return;
-    }
-
-    final suggestions =
-        (await autocompleter.getSuggestions(prefix)).toList(growable: false);
-
-    if (suggestions.isNotEmpty) {
-      popupController.show(suggestions);
-    } else {
-      popupController.hide();
-    }
-  }
-
   void foldAt(int line) {
     final newCode = _code.foldedAt(line);
     super.value = _getValueWithCode(newCode);
@@ -860,18 +769,8 @@ class CodeController extends TextEditingController {
       style: style,
     );
 
-    final visibleSearchResult =
-        _code.hiddenRanges.cutSearchResult(fullSearchResult);
 
-    // TODO(alexeyinkin): Return cached if the value did not change, https://github.com/akvelon/flutter-code-editor/issues/127
-    lastTextSpan = SearchResultHighlightedBuilder(
-      searchResult: visibleSearchResult,
-      rootStyle: style,
-      textSpan: spanBeforeSearch,
-      searchNavigationState: _searchNavigationController.value,
-    ).build();
-
-    return lastTextSpan!;
+    return spanBeforeSearch;
   }
 
   TextSpan _createTextSpan({
@@ -896,7 +795,6 @@ class CodeController extends TextEditingController {
 
   void dismiss() {
     _dismissSuggestions();
-    _dismissSearch();
   }
 
   void _dismissSuggestions() {
@@ -905,19 +803,12 @@ class CodeController extends TextEditingController {
     }
   }
 
-  void _dismissSearch() {
-    searchController.hideSearch(returnFocusToCodeField: true);
-  }
 
-  void showSearch() {
-    searchController.showSearch();
-  }
 
   @override
   void dispose() {
     _debounce?.cancel();
     historyController.dispose();
-    searchController.dispose();
 
     super.dispose();
   }

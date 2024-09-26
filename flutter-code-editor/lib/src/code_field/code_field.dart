@@ -6,7 +6,6 @@ import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import '../code_theme/code_theme.dart';
 import '../gutter/gutter.dart';
 import '../line_numbers/gutter_style.dart';
-import '../search/widget/search_widget.dart';
 import '../sizes.dart';
 import '../wip/autocomplete/popup.dart';
 import 'code_controller.dart';
@@ -127,14 +126,11 @@ class _CodeFieldState extends State<CodeField> {
     widget.controller.addListener(_onTextChanged);
     widget.controller.addListener(_updatePopupOffset);
     widget.controller.popupController.addListener(_onPopupStateChanged);
-    widget.controller.searchController.addListener(
-      _onSearchControllerChange,
-    );
+
     _horizontalCodeScroll = ScrollController();
     _focusNode = widget.focusNode ?? FocusNode();
     _focusNode!.attach(context, onKeyEvent: _onKeyEvent);
 
-    widget.controller.searchController.codeFieldFocusNode = _focusNode;
 
 
     disableSpellCheckIfWeb();
@@ -153,14 +149,10 @@ class _CodeFieldState extends State<CodeField> {
 
   @override
   void dispose() {
-    widget.controller.searchController.codeFieldFocusNode = null;
     widget.controller.removeListener(_onTextChanged);
     widget.controller.removeListener(_updatePopupOffset);
     widget.controller.popupController.removeListener(_onPopupStateChanged);
-    _suggestionsPopup?.remove();
-    widget.controller.searchController.removeListener(
-      _onSearchControllerChange,
-    );
+
     _searchPopup?.remove();
     _searchPopup = null;
     _numberScroll?.dispose();
@@ -175,17 +167,12 @@ class _CodeFieldState extends State<CodeField> {
     oldWidget.controller.removeListener(_onTextChanged);
     oldWidget.controller.removeListener(_updatePopupOffset);
     oldWidget.controller.popupController.removeListener(_onPopupStateChanged);
-    oldWidget.controller.searchController.removeListener(
-      _onSearchControllerChange,
-    );
 
-    widget.controller.searchController.codeFieldFocusNode = _focusNode;
+
     widget.controller.addListener(_onTextChanged);
     widget.controller.addListener(_updatePopupOffset);
     widget.controller.popupController.addListener(_onPopupStateChanged);
-    widget.controller.searchController.addListener(
-      _onSearchControllerChange,
-    );
+
   }
 
   void rebuild() {
@@ -421,68 +408,13 @@ class _CodeFieldState extends State<CodeField> {
   }
 
   void _onSearchControllerChange() {
-    final shouldShow = widget.controller.searchController.shouldShow;
-
-    if (!shouldShow) {
-      _searchPopup?.remove();
-      _searchPopup = null;
-      return;
-    }
 
     if (_searchPopup == null) {
-      _searchPopup = _buildSearchOverlay();
       Overlay.of(context).insert(_searchPopup!);
     }
   }
 
-  OverlayEntry _buildSearchOverlay() {
-    final colorScheme = Theme.of(context).colorScheme;
-    final borderColor = _getTextColorFromTheme() ?? colorScheme.onBackground;
-    return OverlayEntry(
-      builder: (context) {
-        return Positioned(
-          bottom: 10,
-          right: 10,
-          child: Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: borderColor,
-              ),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(5),
-              ),
-            ),
-            child: Material(
-              child: SearchWidget(
-                searchController: widget.controller.searchController,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
 
-  Color? _getTextColorFromTheme() {
-    final textTheme = Theme.of(context).textTheme;
-
-    return textTheme.bodyLarge?.color ??
-        textTheme.bodyMedium?.color ??
-        textTheme.bodySmall?.color ??
-        textTheme.displayLarge?.color ??
-        textTheme.displayMedium?.color ??
-        textTheme.displaySmall?.color ??
-        textTheme.headlineLarge?.color ??
-        textTheme.headlineMedium?.color ??
-        textTheme.headlineSmall?.color ??
-        textTheme.labelLarge?.color ??
-        textTheme.labelMedium?.color ??
-        textTheme.labelSmall?.color ??
-        textTheme.titleLarge?.color ??
-        textTheme.titleMedium?.color ??
-        textTheme.titleSmall?.color;
-  }
 
   OverlayEntry _buildSuggestionOverlay() {
     return OverlayEntry(

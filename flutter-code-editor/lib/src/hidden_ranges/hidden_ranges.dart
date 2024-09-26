@@ -5,8 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:highlight/highlight_core.dart';
 
 import '../code/text_range.dart';
-import '../search/match.dart';
-import '../search/result.dart';
 import 'hidden_range.dart';
 
 @immutable
@@ -353,18 +351,7 @@ class HiddenRanges {
     );
   }
 
-  SearchResult cutSearchResult(SearchResult searchResult) {
-    return SearchResult(
-      matches: searchResult.matches
-          .map<SearchMatch>(
-            (e) => SearchMatch(
-              start: cutPosition(e.start),
-              end: cutPosition(e.end),
-            ),
-          )
-          .toList(growable: false),
-    );
-  }
+
 
   @override
   int get hashCode => Object.hash(
