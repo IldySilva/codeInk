@@ -3,6 +3,7 @@ import '../../../../language/src/result.dart';
 import '../../../flutter_code_editor.dart';
 import '../../code/code_lines.dart';
 import 'abstract.dart';
+import 'highlight.dart';
 import 'java_fallback.dart';
 
 class JavaFoldableBlockParser extends AbstractFoldableBlockParser {

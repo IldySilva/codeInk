@@ -1,6 +1,5 @@
 import 'actionscript.dart';
 import 'ada.dart';
-import 'angelscript.dart';
 import 'apache.dart';
 import 'applescript.dart';
 import 'arcade.dart';
@@ -9,7 +8,6 @@ import 'autoit.dart';
 import 'bash.dart';
 import 'basic.dart';
 import 'brainfuck.dart';
-import 'ceylon.dart';
 import 'clojure.dart';
 import 'cmake.dart';
 import 'coffeescript.dart';
@@ -21,12 +19,9 @@ import 'dart.dart';
 import 'delphi.dart';
 import 'diff.dart';
 import 'django.dart';
-import 'dns.dart';
 import 'dockerfile.dart';
 import 'dos.dart';
 import 'dsconfig.dart';
-import 'dts.dart';
-import 'dust.dart';
 import 'elixir.dart';
 import 'erlang.dart';
 import 'excel.dart';
@@ -37,8 +32,6 @@ import 'gradle.dart';
 import 'groovy.dart';
 import 'haskell.dart';
 import 'http.dart';
-import 'inform7.dart';
-import 'ini.dart';
 import 'java.dart';
 import 'javascript.dart';
 import 'json.dart';
@@ -50,27 +43,16 @@ import 'livescript.dart';
 import 'lua.dart';
 import 'makefile.dart';
 import 'markdown.dart';
-import 'mathematica.dart';
 import 'matlab.dart';
-import 'mel.dart';
-import 'monkey.dart';
-import 'moonscript.dart';
 import 'nginx.dart';
 import 'objectivec.dart';
-import 'openscad.dart';
-import 'parser3.dart';
 import 'perl.dart';
 import 'pgsql.dart';
 import 'php.dart';
 import 'plaintext.dart';
 import 'powershell.dart';
 import 'processing.dart';
-import 'profile.dart';
-import 'prolog.dart';
 import 'properties.dart';
-import 'protobuf.dart';
-import 'puppet.dart';
-import 'purebasic.dart';
 import 'python.dart';
 import 'r.dart';
 import 'roboconf.dart';
@@ -82,30 +64,21 @@ import 'scheme.dart';
 import 'scss.dart';
 import 'shell.dart';
 import 'sql.dart';
-import 'stata.dart';
 import 'swift.dart';
 import 'typescript.dart';
 import 'vbnet.dart';
 import 'vbscript.dart';
 import 'vhdl.dart';
 import 'vim.dart';
-import 'xl.dart';
 import 'xml.dart';
 import 'xquery.dart';
 import 'yaml.dart';
 import 'vue.dart';
 import 'graphql.dart';
-import 'gn.dart';
 
-final communityLanguages = {
-  'vue': vue,
-  'graphql': graphql,
-  'gn': gn,
-};
 final builtinLanguages = {
   'actionscript': actionscript,
   'ada': ada,
-  'angelscript': angelscript,
   'apache': apache,
   'applescript': applescript,
   'arcade': arcade,
@@ -114,7 +87,6 @@ final builtinLanguages = {
   'bash': bash,
   'basic': basic,
   'brainfuck': brainfuck,
-  'ceylon': ceylon,
   'clojure': clojure,
   'cmake': cmake,
   'coffeescript': coffeescript,
@@ -126,12 +98,9 @@ final builtinLanguages = {
   'delphi': delphi,
   'diff': diff,
   'django': django,
-  'dns': dns,
   'dockerfile': dockerfile,
   'dos': dos,
   'dsconfig': dsconfig,
-  'dts': dts,
-  'dust': dust,
   'elixir': elixir,
   'erlang': erlang,
   'excel': excel,
@@ -142,8 +111,6 @@ final builtinLanguages = {
   'groovy': groovy,
   'haskell': haskell,
   'http': http,
-  'inform7': inform7,
-  'ini': ini,
   'java': java,
   'javascript': javascript,
   'json': json,
@@ -155,27 +122,16 @@ final builtinLanguages = {
   'lua': lua,
   'makefile': makefile,
   'markdown': markdown,
-  'mathematica': mathematica,
   'matlab': matlab,
-  'mel': mel,
-  'monkey': monkey,
-  'moonscript': moonscript,
   'nginx': nginx,
   'objectivec': objectivec,
-  'openscad': openscad,
-  'parser3': parser3,
   'perl': perl,
   'pgsql': pgsql,
   'php': php,
   'plaintext': plaintext,
   'powershell': powershell,
   'processing': processing,
-  'profile': profile,
-  'prolog': prolog,
   'properties': properties,
-  'protobuf': protobuf,
-  'puppet': puppet,
-  'purebasic': purebasic,
   'python': python,
   'r': r,
   'roboconf': roboconf,
@@ -187,16 +143,16 @@ final builtinLanguages = {
   'scss': scss,
   'shell': shell,
   'sql': sql,
-  'stata': stata,
   'swift': swift,
   'typescript': typescript,
   'vbnet': vbnet,
+  'vue': vue,
+  'graphql': graphql,
   'vbscript': vbscript,
   'vhdl': vhdl,
   'vim': vim,
-  'xl': xl,
   'xml': xml,
   'xquery': xquery,
   'yaml': yaml,
 };
-final allLanguages = {...builtinLanguages, ...communityLanguages};
+final allLanguages = {...builtinLanguages};

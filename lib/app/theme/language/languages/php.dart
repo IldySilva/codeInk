@@ -6,7 +6,7 @@ import '../src/common_modes.dart';
 final php = Mode(
     refs: {
       '~contains~9~contains~1~contains~4':
-          Mode(variants: [BINARY_NUMBER_MODE, C_NUMBER_MODE]),
+      Mode(variants: [BINARY_NUMBER_MODE, C_NUMBER_MODE]),
       '~contains~9~contains~1~contains~3': Mode(className: "string", contains: [
         BACKSLASH_ESCAPE,
         Mode(ref: '~contains~1~contains~0')
@@ -28,12 +28,12 @@ final php = Mode(
       ]),
       '~contains~7': Mode(begin: "\\\$+[a-zA-Z_-ÿ][a-zA-Z0-9_-ÿ]*"),
       '~contains~1~contains~0':
-          Mode(className: "meta", begin: "<\\?(php)?|\\?>"),
+      Mode(className: "meta", begin: "<\\?(php)?|\\?>"),
     },
     aliases: ["php", "php3", "php4", "php5", "php6", "php7"],
     case_insensitive: true,
     keywords:
-        "and include_once list abstract global private echo interface as static endswitch array null if endwhile or const for endforeach self var while isset public protected exit foreach throw elseif include __FILE__ empty require_once do xor return parent clone use __CLASS__ __LINE__ else break print eval new catch __METHOD__ case exception default die require __FUNCTION__ enddeclare final try switch continue endfor endif declare unset true false trait goto instanceof insteadof __DIR__ __NAMESPACE__ yield finally",
+    "and include_once list abstract global private echo interface as static endswitch array null if endwhile or const for endforeach self var while isset public protected exit foreach throw elseif include __FILE__ empty require_once do xor return parent clone use __CLASS__ __LINE__ else break print eval new catch __METHOD__ case exception default die require __FUNCTION__ enddeclare final try switch continue endfor endif declare unset true false trait goto instanceof insteadof __DIR__ __NAMESPACE__ yield finally",
     contains: [
       HASH_COMMENT_MODE,
       Mode(className: "comment", begin: "//", end: "\$", contains: [

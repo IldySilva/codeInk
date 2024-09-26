@@ -3,9 +3,7 @@ import 'dart:convert';
 
 import 'package:print_script/app/theme/language/languages/delphi.dart';
 
-import 'languages/actionscript.dart';
 import 'languages/ada.dart';
-import 'languages/angelscript.dart';
 import 'languages/apache.dart';
 import 'languages/arcade.dart';
 import 'languages/arduino.dart';
@@ -22,7 +20,6 @@ import 'languages/d.dart';
 import 'languages/dart.dart';
 import 'languages/diff.dart';
 import 'languages/django.dart';
-import 'languages/dns.dart';
 import 'languages/dockerfile.dart';
 import 'languages/dos.dart';
 import 'languages/dsconfig.dart';
@@ -43,11 +40,9 @@ import 'languages/livescript.dart';
 import 'languages/lua.dart';
 import 'languages/makefile.dart';
 import 'languages/markdown.dart';
-import 'languages/mathematica.dart';
 import 'languages/matlab.dart';
 import 'languages/nginx.dart';
 import 'languages/objectivec.dart';
-import 'languages/openscad.dart';
 import 'languages/perl.dart';
 import 'languages/pgsql.dart';
 import 'languages/php.dart';
@@ -55,9 +50,6 @@ import 'languages/plaintext.dart';
 import 'languages/powershell.dart';
 import 'languages/processing.dart';
 import 'languages/properties.dart';
-import 'languages/protobuf.dart';
-import 'languages/puppet.dart';
-import 'languages/purebasic.dart';
 import 'languages/python.dart';
 import 'languages/r.dart';
 import 'languages/roboconf.dart';
@@ -69,7 +61,6 @@ import 'languages/scheme.dart';
 import 'languages/scss.dart';
 import 'languages/shell.dart';
 import 'languages/sql.dart';
-import 'languages/stata.dart';
 import 'languages/swift.dart';
 import 'languages/typescript.dart';
 import 'languages/vbnet.dart';
@@ -80,15 +71,10 @@ import 'languages/yaml.dart';
 import 'src/mode.dart';
 
 enum LanguageTypes {
-  actionscript,
   ada,
-  angelscript,
   apache,
-  applescript,
   arcade,
   arduino,
-  armasm,
-  autohotkey,
   autoit,
   bash,
   basic,
@@ -96,41 +82,25 @@ enum LanguageTypes {
   clojure,
   cmake,
   coffeescript,
-  cos,
   cpp,
-  crystal,
   cs,
-  csp,
   css,
   d,
   dart,
   delphi,
   diff,
   django,
-  dns,
   dockerfile,
   dos,
   dsconfig,
-  dts,
-  dust,
-  ebnf,
   elixir,
-  elm,
-  erb,
-  erlangRepl,
   erlang,
   excel,
-  fix,
-  flix,
   fortran,
   fsharp,
-  gams,
-  gauss,
-  gcode,
   go,
   gradle,
   groovy,
-  handlebars,
   haskell,
   htmlbars,
   http,
@@ -140,59 +110,33 @@ enum LanguageTypes {
   json,
   julia,
   kotlin,
-  livescript,
   lua,
   makefile,
   markdown,
-  mathematica,
   matlab,
-  mercury,
   nginx,
-  nix,
   nsis,
   objectivec,
-  ocaml,
-  openscad,
   perl,
   pgsql,
   php,
   plaintext,
   powershell,
   processing,
-  profile,
-  prolog,
   properties,
-  protobuf,
-  puppet,
-  purebasic,
   python,
   r,
-  reasonml,
   rib,
-  roboconf,
-  routeros,
-  rsl,
   ruby,
   ruleslanguage,
   rust,
-  sas,
   scala,
-  scheme,
   scilab,
   scss,
   shell,
-  smali,
-  smalltalk,
-  sml,
-  sqf,
   sql,
-  stan,
-  stata,
-  step21,
   stylus,
-  subunit,
   swift,
-  taggerscript,
   typescript,
   vbnet,
   vbscriptHtml,
@@ -204,9 +148,7 @@ enum LanguageTypes {
 }
 
  Map<LanguageTypes, dynamic> builtinLanguagesMap = {
-  LanguageTypes.actionscript: actionscript,
   LanguageTypes.ada: ada,
-  LanguageTypes.angelscript: angelscript,
   LanguageTypes.apache: apache,
   LanguageTypes.arcade: arcade,
   LanguageTypes.arduino: arduino,
@@ -225,7 +167,6 @@ enum LanguageTypes {
   LanguageTypes.diff: diff,
   LanguageTypes.django: django,
   LanguageTypes.dockerfile: dockerfile,
-  LanguageTypes.dns: dns,
   LanguageTypes.dos: dos,
   LanguageTypes.dsconfig: dsconfig,
   LanguageTypes.elixir: elixir,
@@ -242,15 +183,12 @@ enum LanguageTypes {
   LanguageTypes.json: json,
   LanguageTypes.julia: julia,
   LanguageTypes.kotlin: kotlin,
-  LanguageTypes.livescript: livescript,
   LanguageTypes.lua: lua,
   LanguageTypes.makefile: makefile,
   LanguageTypes.markdown: markdown,
-  LanguageTypes.mathematica: mathematica,
   LanguageTypes.matlab: matlab,
   LanguageTypes.nginx: nginx,
   LanguageTypes.objectivec: objectivec,
-  LanguageTypes.openscad: openscad,
   LanguageTypes.perl: perl,
   LanguageTypes.pgsql: pgsql,
   LanguageTypes.php: php,
@@ -258,21 +196,15 @@ enum LanguageTypes {
   LanguageTypes.powershell: powershell,
   LanguageTypes.processing: processing,
   LanguageTypes.properties: properties,
-  LanguageTypes.protobuf: protobuf,
-  LanguageTypes.puppet: puppet,
-  LanguageTypes.purebasic: purebasic,
   LanguageTypes.python: python,
   LanguageTypes.r: r,
-  LanguageTypes.roboconf: roboconf,
   LanguageTypes.ruby: ruby,
   LanguageTypes.ruleslanguage: ruleslanguage,
   LanguageTypes.rust: rust,
   LanguageTypes.scala: scala,
-  LanguageTypes.scheme: scheme,
   LanguageTypes.scss: scss,
   LanguageTypes.shell: shell,
   LanguageTypes.sql: sql,
-  LanguageTypes.stata: stata,
   LanguageTypes.swift: swift,
   LanguageTypes.typescript: typescript,
   LanguageTypes.vbnet: vbnet,
