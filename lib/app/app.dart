@@ -21,19 +21,26 @@ class _AppState extends State<App> {
     return MaterialApp(
         title: 'CodInk',
         theme: ThemeData(
+sliderTheme: SliderThemeData(overlayShape: SliderComponentShape.noThumb),
+
              inputDecorationTheme: InputDecorationTheme(
+
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
           textTheme: GoogleFonts.poppinsTextTheme(),
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurpleAccent,brightness: Brightness.dark),
         ),
         home: Scaffold(
           body: Flex(
             direction: Axis.horizontal,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(flex: 2, child: CodeToolBar()),
               Flexible(
                   flex: 8,
                   child: Flex(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     direction: Axis.vertical,
                     children: [
                       Expanded(
@@ -45,7 +52,7 @@ class _AppState extends State<App> {
                             child: Text(
                                 "Turn your code into stunning prints in seconds.",
                                 style:
-                                    Theme.of(context).textTheme.headlineSmall),
+                                    Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white)),
                           ),
                         ],
                       )),

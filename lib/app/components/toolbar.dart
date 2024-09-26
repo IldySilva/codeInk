@@ -3,7 +3,6 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:print_script/app/controller.dart';
-import 'package:print_script/app/theme/code_editor/flutter_code_editor.dart';
 import 'package:print_script/app/theme/language/enum_languages.dart';
 import 'package:print_script/app/utils/widget_to_image_controller.dart';
 import '../consts/const_default_gradients.dart';
@@ -12,7 +11,7 @@ import '../theme/enum_theme_type.dart';
 
 class CodeToolBar extends StatelessWidget {
   CodeToolBar({super.key});
-  Controller controller = Controller();
+  final Controller controller = Controller();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,25 +22,52 @@ class CodeToolBar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: RichText(
-                text: const TextSpan(style: TextStyle(fontSize: 20), children: [
-                  TextSpan(text: 'Code'),
-                  TextSpan(
-                      text: 'Ink',
-                      style: TextStyle(fontWeight: FontWeight.bold))
-                ]),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RichText(
+                    text: const TextSpan(
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        children: [
+                          TextSpan(text: 'Code'),
+                          TextSpan(
+                              text: 'Ink',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(
+                              text: ' ✨',)
+                        ]),
+                  ),
+                  Row(
+                    children: [
+                       Text(
+                        "Created by: ",
+                        style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onPrimaryContainer)),
+
+                      MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: InkWell(
+                              onTap: () {},
+                              child:  Text(
+                                "Ildeberto 😎",
+                                style: TextStyle(
+                                    fontSize: 11,
+                                    color: Theme.of(context).colorScheme.onPrimaryContainer),
+                              ))),
+                    ],
+                  )
+                ],
               ),
             ),
-            const Divider(),
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
                 "Background",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               ),
             ),
             Wrap(
@@ -80,6 +106,67 @@ class CodeToolBar extends StatelessWidget {
                 )
               ],
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            ValueListenableBuilder(
+              builder: (context, value, _) {
+                return DropdownButtonFormField2<ThemeType>(
+                  decoration: const InputDecoration(
+                    label: Row(
+                      children: [Text("Theme"), Icon(Icons.palette)],
+                    ),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                  ),
+                  isExpanded: true,
+                  value: value,
+                  onChanged: (ThemeType? newValue) {
+                    Controller.selectedTheme.value = newValue!;
+                  },
+                  items: ThemeType.values
+                      .map<DropdownMenuItem<ThemeType>>((ThemeType theme) {
+                    return DropdownMenuItem<ThemeType>(
+                      value: theme,
+                      child: Text(theme.cleanName,style: const TextStyle(color: Colors.white)),
+                    );
+                  }).toList(),
+                );
+              },
+              valueListenable: Controller.selectedTheme,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ValueListenableBuilder(
+              builder: (context, value, _) {
+                return DropdownButtonFormField2<LanguageTypes>(
+                  decoration: const InputDecoration(
+                    label: Row(
+                      children: [Text("Language"), Icon(Icons.language)],
+                    ),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                  ),
+                  isExpanded: true,
+                  value: value,
+                  onChanged: (LanguageTypes? newValue) {
+                    Controller.selectedLanguage.value = newValue!;
+                    Controller.selectedTheme.notifyListeners();
+                  },
+                  items: LanguageTypes.values
+                      .map<DropdownMenuItem<LanguageTypes>>(
+
+                          (LanguageTypes theme) {
+                    return DropdownMenuItem<LanguageTypes>(
+                      value: theme,
+                      child: Text(theme.cleanName,style: TextStyle(color: Colors.white),),
+                    );
+                  }).toList(),
+                );
+              },
+              valueListenable: Controller.selectedLanguage,
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -87,7 +174,11 @@ class CodeToolBar extends StatelessWidget {
                 children: [
                   const Text(
                     "Padding",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   ValueListenableBuilder(
                     builder: (context, value, _) {
@@ -104,63 +195,21 @@ class CodeToolBar extends StatelessWidget {
                 ],
               ),
             ),
-            ValueListenableBuilder(
-              builder: (context, value, _) {
-                return DropdownButtonFormField2<ThemeType>(
-                  decoration: const InputDecoration(
-                    label: Row(children: [Text("Theme"),Icon(Icons.palette)],),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 2),
-                  ),
-                  isExpanded: true,
-                  value: value,
-                  onChanged: (ThemeType? newValue) {
-                    Controller.selectedTheme.value = newValue!;
-                  },
-                  items: ThemeType.values
-                      .map<DropdownMenuItem<ThemeType>>((ThemeType theme) {
-                    return DropdownMenuItem<ThemeType>(
-                      value: theme,
-                      child: Text(theme.cleanName),
-                    );
-                  }).toList(),
-                );
-              },
-              valueListenable: Controller.selectedTheme,
-            ),
-            const SizedBox(height: 20,),
-            ValueListenableBuilder(
-              builder: (context, value, _) {
-                return DropdownButtonFormField2<LanguageTypes>(
-                  decoration:  const InputDecoration(
-                    label: Row(children: [Text("Language"),Icon(Icons.language)],),
-                    contentPadding:
-                    EdgeInsets.symmetric(vertical: 8, horizontal: 2),
-                  ),
-                  isExpanded: true,
-                  value: value,
-                  onChanged: (LanguageTypes? newValue) {
-                    Controller.selectedLanguage.value = newValue!;
-                    Controller.selectedTheme.notifyListeners();
-                  },
-                  items: LanguageTypes.values
-                      .map<DropdownMenuItem<LanguageTypes>>((LanguageTypes theme) {
-                    return DropdownMenuItem<LanguageTypes>(
-                      value: theme,
-                      child: Text(theme.cleanName),
-                    );
-                  }).toList(),
-                );
-              },
-              valueListenable: Controller.selectedLanguage,
-            ),
-            ElevatedButton(
+            const Expanded(child: SizedBox()),
+            MaterialButton(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                minWidth: double.infinity,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
                 onPressed: () async {
                   var bytes = await widgetsToImageController.capture();
                   await FileSaver.instance
                       .saveFile(name: generateName, bytes: bytes);
                 },
-                child: const Text("Export")),
+                child: const Text(
+                  "Donwload",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )),
           ],
         ),
       ),

@@ -19,7 +19,7 @@ class Controller extends ChangeNotifier {
 
   static String code=defaultCode;
   static ValueNotifier<LanguageTypes> selectedLanguage =
-      ValueNotifier(LanguageTypes.sql);
+      ValueNotifier(LanguageTypes.javascript);
   static ValueNotifier<ThemeType> selectedTheme =
       ValueNotifier(ThemeType.dracula);
 
