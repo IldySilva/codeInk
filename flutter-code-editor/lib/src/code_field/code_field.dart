@@ -7,7 +7,6 @@ import '../code_theme/code_theme.dart';
 import '../gutter/gutter.dart';
 import '../line_numbers/gutter_style.dart';
 import '../sizes.dart';
-import '../wip/autocomplete/popup.dart';
 import 'code_controller.dart';
 import 'default_styles.dart';
 import 'js_workarounds/js_workarounds.dart';
@@ -125,7 +124,6 @@ class _CodeFieldState extends State<CodeField> {
 
     widget.controller.addListener(_onTextChanged);
     widget.controller.addListener(_updatePopupOffset);
-    widget.controller.popupController.addListener(_onPopupStateChanged);
 
     _horizontalCodeScroll = ScrollController();
     _focusNode = widget.focusNode ?? FocusNode();
@@ -151,8 +149,6 @@ class _CodeFieldState extends State<CodeField> {
   void dispose() {
     widget.controller.removeListener(_onTextChanged);
     widget.controller.removeListener(_updatePopupOffset);
-    widget.controller.popupController.removeListener(_onPopupStateChanged);
-
     _searchPopup?.remove();
     _searchPopup = null;
     _numberScroll?.dispose();
@@ -166,12 +162,10 @@ class _CodeFieldState extends State<CodeField> {
     super.didUpdateWidget(oldWidget);
     oldWidget.controller.removeListener(_onTextChanged);
     oldWidget.controller.removeListener(_updatePopupOffset);
-    oldWidget.controller.popupController.removeListener(_onPopupStateChanged);
 
 
     widget.controller.addListener(_onTextChanged);
     widget.controller.addListener(_updatePopupOffset);
-    widget.controller.popupController.addListener(_onPopupStateChanged);
 
   }
 
@@ -390,46 +384,7 @@ class _CodeFieldState extends State<CodeField> {
     );
   }
 
-  void _onPopupStateChanged() {
-    final shouldShow =
-        widget.controller.popupController.shouldShow && windowSize != null;
-    if (!shouldShow) {
-      _suggestionsPopup?.remove();
-      _suggestionsPopup = null;
-      return;
-    }
-
-    if (_suggestionsPopup == null) {
-      _suggestionsPopup = _buildSuggestionOverlay();
-      Overlay.of(context).insert(_suggestionsPopup!);
-    }
-
-    _suggestionsPopup!.markNeedsBuild();
-  }
-
-  void _onSearchControllerChange() {
-
-    if (_searchPopup == null) {
-      Overlay.of(context).insert(_searchPopup!);
-    }
-  }
 
 
 
-  OverlayEntry _buildSuggestionOverlay() {
-    return OverlayEntry(
-      builder: (context) {
-        return Popup(
-          normalOffset: _normalPopupOffset,
-          flippedOffset: _flippedPopupOffset,
-          controller: widget.controller.popupController,
-          editingWindowSize: windowSize!,
-          style: textStyle,
-          backgroundColor: _backgroundCol,
-          parentFocusNode: _focusNode!,
-          editorOffset: _editorOffset,
-        );
-      },
-    );
-  }
 }

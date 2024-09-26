@@ -9,11 +9,7 @@ import 'package:highlight/highlight_core.dart';
 
 import '../../flutter_code_editor.dart';
 import '../code/code_edit_result.dart';
-import '../code/key_event.dart';
-import '../history/code_history_controller.dart';
-import '../history/code_history_record.dart';
 import '../single_line_comments/parser/single_line_comments.dart';
-import '../wip/autocomplete/popup_controller.dart';
 import 'span_builder.dart';
 
 class CodeController extends TextEditingController {
@@ -82,8 +78,6 @@ class CodeController extends TextEditingController {
 
   final _styleList = <TextStyle>[];
   final _modifierMap = <String, CodeModifier>{};
-  late PopupController popupController;
-  late final historyController = CodeHistoryController(codeController: this);
 
 
   /// The last [TextSpan] returned from [buildTextSpan].
@@ -133,7 +127,6 @@ class CodeController extends TextEditingController {
       _styleList.addAll(patternMap!.values);
     }
 
-    popupController = PopupController(onCompletionSelected: insertSelectedWord);
 
     unawaited(analyzeCode());
   }
@@ -240,60 +233,14 @@ class CodeController extends TextEditingController {
   }
 
   KeyEventResult onKey(KeyEvent event) {
-    if (event is KeyDownEvent || event is KeyRepeatEvent) {
-      return _onKeyDownRepeat(event);
-    }
-
-    return KeyEventResult.ignored; // The framework will handle.
-  }
-
-  KeyEventResult _onKeyDownRepeat(KeyEvent event) {
-    if (event.isCtrlF(HardwareKeyboard.instance.logicalKeysPressed)) {
-      return KeyEventResult.handled;
-    }
-
-    if (popupController.shouldShow) {
-      if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
-        popupController.scrollByArrow(ScrollDirection.up);
-        return KeyEventResult.handled;
-      }
-      if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
-        popupController.scrollByArrow(ScrollDirection.down);
-        return KeyEventResult.handled;
-      }
-    }
 
     return KeyEventResult.ignored; // The framework will handle.
   }
 
 
 
-  /// Inserts the word selected from the list of completions
-  void insertSelectedWord() {
-    final previousSelection = selection;
-    final selectedWord = popupController.getSelectedWord();
-    final startPosition = value.wordAtCursorStart;
 
-    if (startPosition != null) {
-      final replacedText = text.replaceRange(
-        startPosition,
-        selection.baseOffset,
-        selectedWord,
-      );
 
-      final adjustedSelection = previousSelection.copyWith(
-        baseOffset: startPosition + selectedWord.length,
-        extentOffset: startPosition + selectedWord.length,
-      );
-
-      value = TextEditingValue(
-        text: replacedText,
-        selection: adjustedSelection,
-      );
-    }
-
-    popupController.hide();
-  }
 
   String get fullText => _code.text;
 
@@ -365,32 +312,13 @@ class CodeController extends TextEditingController {
         }
       }
 
-      // Uncomment this to see the hidden text in the console
-      // as you change the visible text.
-      //print('\n\n${_code.text}');
     }
-
-    historyController.beforeCodeControllerValueChanged(
-      code: _code,
-      selection: newValue.selection,
-      isTextChanging: hasTextChanged,
-    );
 
     super.value = newValue;
 
   }
 
-  void applyHistoryRecord(CodeHistoryRecord record) {
-    _code = record.code.foldedAs(_code);
-    final fullSelection =
-        record.code.hiddenRanges.recoverSelection(record.selection);
-    final cutSelection = _code.hiddenRanges.cutSelection(fullSelection);
 
-    super.value = TextEditingValue(
-      text: code.visibleText,
-      selection: cutSelection,
-    );
-  }
 
   void outdentSelection() {
     final tabSpaces = params.tabSpaces;
@@ -598,13 +526,7 @@ class CodeController extends TextEditingController {
     final finalVisibleSelection =
         _code.hiddenRanges.cutSelection(finalFullSelection);
 
-    // TODO(yescorp): move to the listener both here and in `set value`
-    //  or come up with a different approach
-    historyController.beforeCodeControllerValueChanged(
-      code: _code,
-      selection: finalVisibleSelection,
-      isTextChanging: true,
-    );
+
 
     super.value = TextEditingValue(
       text: _code.visibleText,
@@ -798,9 +720,7 @@ class CodeController extends TextEditingController {
   }
 
   void _dismissSuggestions() {
-    if (popupController.enabled) {
-      popupController.hide();
-    }
+
   }
 
 
@@ -808,7 +728,6 @@ class CodeController extends TextEditingController {
   @override
   void dispose() {
     _debounce?.cancel();
-    historyController.dispose();
 
     super.dispose();
   }

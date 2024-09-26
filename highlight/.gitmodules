@@ -1,0 +1,15 @@
+[submodule "vendor/highlight.js"]
+	path = vendor/highlight.js
+	url = https://github.com/highlightjs/highlight.js.git
+[submodule "vendor/highlightjs-vue"]
+	path = vendor/highlightjs-vue
+	url = https://github.com/highlightjs/highlightjs-vue.git
+[submodule "vendor/highlightjs-graphql"]
+	path = vendor/highlightjs-graphql
+	url = https://github.com/dpeek/highlightjs-graphql.git
+[submodule "vendor/highlightjs-GN"]
+	path = vendor/highlightjs-GN
+	url = https://github.com/highlightjs/highlightjs-GN.git
+[submodule "vendor/highlightjs-solidity"]
+	path = vendor/highlightjs-solidity
+	url = https://github.com/highlightjs/highlightjs-solidity.git

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:highlight/languages/javascript.dart' show javascript;
 import 'package:print_script/app/const_default_gradients.dart';
+import 'package:print_script/app/theme/enum_theme_type.dart';
 
 import 'const_default_code.dart';
 
@@ -15,6 +16,10 @@ class Controller extends ChangeNotifier {
     return _instance;
   }
 
+
+
+
+  static ValueNotifier<ThemeType> selectedTheme=ValueNotifier(ThemeType.dracula);
   static final textEditorController = CodeController(
 
       text: defaultCode, // Initial code

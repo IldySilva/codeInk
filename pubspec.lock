@@ -25,14 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  box_transform:
-    dependency: transitive
-    description:
-      name: box_transform
-      sha256: "99744e5f5edb2056128d3846894bfa6d4a02b5a4ef42657cf957a345731cff2c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.4"
   characters:
     dependency: transitive
     description:
@@ -105,6 +97,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  dropdown_button2:
+    dependency: "direct main"
+    description:
+      name: dropdown_button2
+      sha256: b0fe8d49a030315e9eef6c7ac84ca964250155a6224d491c1365061bc974a9e1
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.9"
   equatable:
     dependency: transitive
     description:
@@ -142,14 +142,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_box_transform:
-    dependency: "direct main"
-    description:
-      name: flutter_box_transform
-      sha256: "428619d0ea67631e4486b7a2ba46b1f6589420dcb9d0e520f8c81b98bd211159"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.6"
   flutter_code_editor:
     dependency: "direct main"
     description:
@@ -160,10 +152,9 @@ packages:
   flutter_highlight:
     dependency: transitive
     description:
-      name: flutter_highlight
-      sha256: "7b96333867aa07e122e245c033b8ad622e4e3a42a1a2372cbb098a2541d8782c"
-      url: "https://pub.dev"
-    source: hosted
+      path: "highlight/flutter_highlight"
+      relative: true
+    source: path
     version: "0.7.0"
   flutter_lints:
     dependency: "direct dev"
@@ -194,10 +185,9 @@ packages:
   highlight:
     dependency: transitive
     description:
-      name: highlight
-      sha256: "5353a83ffe3e3eca7df0abfb72dcf3fa66cc56b953728e7113ad4ad88497cf21"
-      url: "https://pub.dev"
-    source: hosted
+      path: "highlight/highlight"
+      relative: true
+    source: path
     version: "0.7.0"
   hive:
     dependency: transitive

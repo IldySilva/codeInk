@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:print_script/app/components/resizable_container.dart';
 
 import 'components/code_editor.dart';
 import 'components/toolbar.dart';
@@ -22,6 +21,8 @@ class _AppState extends State<App> {
     return MaterialApp(
         title: 'CodInk',
         theme: ThemeData(
+             inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
           textTheme: GoogleFonts.poppinsTextTheme(),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),

@@ -1,7 +1,6 @@
 name: flutter_code_editor
 description: A customizable code field supporting syntax highlighting and code folding.
 version: 0.3.2
-repository: https://github.com/akvelon/flutter-code-editor
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
@@ -14,8 +13,11 @@ dependencies:
   collection: ^1.17.2
   equatable: ^2.0.5
   flutter: { sdk: flutter }
-  flutter_highlight: ^0.7.0
-  highlight: ^0.7.0
+  flutter_highlight:
+    path: ../highlight/flutter_highlight
+  highlight:
+    path: ../highlight/highlight
+
   http: ^1.1.0
   linked_scroll_controller: ^0.2.0
   meta: ^1.9.1

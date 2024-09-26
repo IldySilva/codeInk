@@ -3,8 +3,8 @@ import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:print_script/app/controller.dart';
 
 import 'package:print_script/app/components/toolbar.dart';
+import 'package:print_script/app/theme/enum_theme_type.dart';
 import 'package:print_script/app/widget_to_image_wrapper.dart';
-import 'package:flutter_highlight/themes/dracula.dart';
 
 class CodeEditor extends StatefulWidget {
   CodeEditor({super.key});
@@ -46,17 +46,21 @@ class _CodeEditorState extends State<CodeEditor> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: CodeTheme(
-                          data: CodeThemeData(styles: draculaTheme),
-                          child: CodeField(
-                            wrap: true,
-                            gutterStyle: GutterStyle(
-                                showFoldingHandles: false,
-                                showErrors: false,
-                                showLineNumbers:
-                                    Controller.showLineNumbers.value),
-                            controller: Controller.textEditorController,
-                          )),
+                      child: ValueListenableBuilder(
+                        builder: (context,theme,_) {
+                          return CodeTheme(
+                              data: CodeThemeData(styles: theme.themeValue),
+                              child: CodeField(
+                                wrap: true,
+                                gutterStyle: GutterStyle(
+                                    showFoldingHandles: false,
+                                    showErrors: false,
+                                    showLineNumbers:
+                                        Controller.showLineNumbers.value),
+                                controller: Controller.textEditorController,
+                              ));
+                        }, valueListenable: Controller.selectedTheme,
+                      ),
                     ),
                     Positioned(
                      right: 1,

@@ -1,4 +1,5 @@
 import 'package:dotted_border/dotted_border.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:print_script/app/controller.dart';
@@ -6,13 +7,15 @@ import 'package:print_script/app/widget_to_image_controller.dart';
 import 'package:flutter/cupertino.dart' as cuppertino;
 import '../const_default_gradients.dart';
 import '../file_name_generator.dart';
+import '../theme/enum_theme_type.dart';
 
 class CodeToolBar extends StatelessWidget {
   CodeToolBar({super.key});
-Controller controller=Controller();
+  Controller controller = Controller();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
@@ -27,7 +30,8 @@ Controller controller=Controller();
                 text: const TextSpan(style: TextStyle(fontSize: 20), children: [
                   TextSpan(text: 'Code'),
                   TextSpan(
-                      text: 'Ink', style: TextStyle(fontWeight: FontWeight.bold))
+                      text: 'Ink',
+                      style: TextStyle(fontWeight: FontWeight.bold))
                 ]),
               ),
             ),
@@ -48,7 +52,7 @@ Controller controller=Controller();
                     padding: const EdgeInsets.only(left: 8.0, bottom: 8),
                     child: InkWell(
                       onTap: () {
-                       controller.setColor(gradient);
+                        controller.setColor(gradient);
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(4),
@@ -85,7 +89,7 @@ Controller controller=Controller();
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   ValueListenableBuilder(
-                    builder: (context,value,_) {
+                    builder: (context, value, _) {
                       return Slider.adaptive(
                           min: 0,
                           max: 100,
@@ -93,17 +97,35 @@ Controller controller=Controller();
                           onChanged: (v) {
                             controller.setPadding(v);
                           });
-                    }, valueListenable: Controller.padding,
+                    },
+                    valueListenable: Controller.padding,
                   )
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                "Theme",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+            ValueListenableBuilder(
+              builder: (context, value, _) {
+                return DropdownButtonFormField2<ThemeType>(
+                  decoration: const InputDecoration(
+                    labelText: 'Theme',
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  ),
+                  isExpanded: true,
+                  value: value,
+                  onChanged: (ThemeType? newValue) {
+                    Controller.selectedTheme.value = newValue!;
+                  },
+                  items: ThemeType.values
+                      .map<DropdownMenuItem<ThemeType>>((ThemeType theme) {
+                    return DropdownMenuItem<ThemeType>(
+                      value: theme,
+                      child: Text(theme.cleanName),
+                    );
+                  }).toList(),
+                );
+              },
+              valueListenable: Controller.selectedTheme,
             ),
             const Padding(
               padding: EdgeInsets.all(8.0),
