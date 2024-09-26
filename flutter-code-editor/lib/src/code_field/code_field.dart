@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 import '../code_theme/code_theme.dart';
@@ -10,107 +9,9 @@ import '../line_numbers/gutter_style.dart';
 import '../search/widget/search_widget.dart';
 import '../sizes.dart';
 import '../wip/autocomplete/popup.dart';
-import 'actions/comment_uncomment.dart';
-import 'actions/enter_key.dart';
-import 'actions/indent.dart';
-import 'actions/outdent.dart';
-import 'actions/search.dart';
 import 'code_controller.dart';
 import 'default_styles.dart';
 import 'js_workarounds/js_workarounds.dart';
-
-final _shortcuts = <ShortcutActivator, Intent>{
-  // Copy
-  LogicalKeySet(
-    LogicalKeyboardKey.control,
-    LogicalKeyboardKey.keyC,
-  ): CopySelectionTextIntent.copy,
-  const SingleActivator(
-    LogicalKeyboardKey.keyC,
-    meta: true,
-  ): CopySelectionTextIntent.copy,
-  LogicalKeySet(
-    LogicalKeyboardKey.control,
-    LogicalKeyboardKey.insert,
-  ): CopySelectionTextIntent.copy,
-
-  // Cut
-  LogicalKeySet(
-    LogicalKeyboardKey.control,
-    LogicalKeyboardKey.keyX,
-  ): const CopySelectionTextIntent.cut(SelectionChangedCause.keyboard),
-  const SingleActivator(
-    LogicalKeyboardKey.keyX,
-    meta: true,
-  ): const CopySelectionTextIntent.cut(SelectionChangedCause.keyboard),
-  LogicalKeySet(
-    LogicalKeyboardKey.shift,
-    LogicalKeyboardKey.delete,
-  ): const CopySelectionTextIntent.cut(SelectionChangedCause.keyboard),
-
-  // Undo
-  LogicalKeySet(
-    LogicalKeyboardKey.control,
-    LogicalKeyboardKey.keyZ,
-  ): const UndoTextIntent(SelectionChangedCause.keyboard),
-  const SingleActivator(
-    LogicalKeyboardKey.keyZ,
-    meta: true,
-  ): const UndoTextIntent(SelectionChangedCause.keyboard),
-
-  // Redo
-  LogicalKeySet(
-    LogicalKeyboardKey.shift,
-    LogicalKeyboardKey.control,
-    LogicalKeyboardKey.keyZ,
-  ): const RedoTextIntent(SelectionChangedCause.keyboard),
-  LogicalKeySet(
-    LogicalKeyboardKey.shift,
-    LogicalKeyboardKey.meta,
-    LogicalKeyboardKey.keyZ,
-  ): const RedoTextIntent(SelectionChangedCause.keyboard),
-
-  // Indent
-  LogicalKeySet(
-    LogicalKeyboardKey.tab,
-  ): const IndentIntent(),
-
-  // Outdent
-  LogicalKeySet(
-    LogicalKeyboardKey.shift,
-    LogicalKeyboardKey.tab,
-  ): const OutdentIntent(),
-
-  // Comment Uncomment
-  LogicalKeySet(
-    LogicalKeyboardKey.control,
-    LogicalKeyboardKey.slash,
-  ): const CommentUncommentIntent(),
-  const SingleActivator(
-    LogicalKeyboardKey.slash,
-    meta: true,
-  ): const CommentUncommentIntent(),
-
-  // Search
-  LogicalKeySet(
-    LogicalKeyboardKey.control,
-    LogicalKeyboardKey.keyF,
-  ): const SearchIntent(),
-  const SingleActivator(
-    LogicalKeyboardKey.keyF,
-    meta: true,
-  ): const SearchIntent(),
-
-  // Dismiss
-  LogicalKeySet(
-    LogicalKeyboardKey.escape,
-  ): const DismissIntent(),
-
-  // EnterKey
-  LogicalKeySet(
-    LogicalKeyboardKey.enter,
-  ): const EnterKeyIntent(),
-};
 
 class CodeField extends StatefulWidget {
   /// {@macro flutter.widgets.textField.minLines}
@@ -148,12 +49,6 @@ class CodeField extends StatefulWidget {
   /// {@macro flutter.widgets.editableText.onChanged}
   final void Function(String)? onChanged;
 
-  /// {@macro flutter.widgets.editableText.readOnly}
-  ///
-  /// This is just passed as a parameter to a [TextField].
-  /// See also [CodeController.readOnly].
-  final bool readOnly;
-
   final Color? background;
   final EdgeInsets padding;
   final Decoration? decoration;
@@ -178,7 +73,6 @@ class CodeField extends StatefulWidget {
     this.padding = EdgeInsets.zero,
     GutterStyle? gutterStyle,
     this.enabled,
-    this.readOnly = false,
     this.cursorColor,
     this.textSelectionTheme,
     this.lineNumberBuilder,
@@ -242,8 +136,7 @@ class _CodeFieldState extends State<CodeField> {
 
     widget.controller.searchController.codeFieldFocusNode = _focusNode;
 
-    // Workaround for disabling spellchecks in FireFox
-    // https://github.com/akvelon/flutter-code-editor/issues/197
+
     disableSpellCheckIfWeb();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -348,7 +241,7 @@ class _CodeFieldState extends State<CodeField> {
     );
 
     return Padding(
-      padding: const EdgeInsets.only(left:16.0,right: 2),
+      padding: const EdgeInsets.only(right: 1),
       child: intrinsic,
     );
   }
@@ -393,10 +286,8 @@ class _CodeFieldState extends State<CodeField> {
       ),
       cursorColor: widget.cursorColor ?? defaultTextStyle.color,
       autocorrect: false,
-      enableSuggestions: false,
       enabled: widget.enabled,
       onChanged: widget.onChanged,
-      readOnly: widget.readOnly,
     );
 
     final editingField = Theme(

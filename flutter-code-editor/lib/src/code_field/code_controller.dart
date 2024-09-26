@@ -20,14 +20,8 @@ import '../search/search_navigation_controller.dart';
 import '../search/settings_controller.dart';
 import '../single_line_comments/parser/single_line_comments.dart';
 import '../wip/autocomplete/popup_controller.dart';
-import 'actions/comment_uncomment.dart';
 import 'actions/copy.dart';
-import 'actions/dismiss.dart';
-import 'actions/enter_key.dart';
-import 'actions/indent.dart';
-import 'actions/outdent.dart';
 import 'actions/redo.dart';
-import 'actions/search.dart';
 import 'actions/undo.dart';
 import 'search_result_highlighted_builder.dart';
 import 'span_builder.dart';
@@ -121,15 +115,9 @@ class CodeController extends TextEditingController {
   TextSpan? lastTextSpan;
 
   late final actions = <Type, Action<Intent>>{
-    CommentUncommentIntent: CommentUncommentAction(controller: this),
     CopySelectionTextIntent: CopyAction(controller: this),
-    IndentIntent: IndentIntentAction(controller: this),
-    OutdentIntent: OutdentIntentAction(controller: this),
     RedoTextIntent: RedoAction(controller: this),
     UndoTextIntent: UndoAction(controller: this),
-    SearchIntent: SearchAction(controller: this),
-    DismissIntent: CustomDismissAction(controller: this),
-    EnterKeyIntent: EnterKeyAction(controller: this),
   };
 
   CodeController({
