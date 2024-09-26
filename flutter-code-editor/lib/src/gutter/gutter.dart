@@ -1,12 +1,8 @@
-// TODO(alexeyinkin): Remove when dropping support for Flutter < 3.10, https://github.com/akvelon/flutter-code-editor/issues/245
-// ignore_for_file: unnecessary_non_null_assertion
 
 import 'package:flutter/material.dart';
 
 import '../code_field/code_controller.dart';
 import '../line_numbers/gutter_style.dart';
-import 'error.dart';
-import 'fold_toggle.dart';
 
 const _issueColumnWidth = 16.0;
 const _foldingColumnWidth = 16.0;
@@ -61,10 +57,6 @@ class GutterWidget extends StatelessWidget {
     if (style.showErrors) {
       _fillIssues(tableRows);
     }
-    if (style.showFoldingHandles) {
-      _fillFoldToggles(tableRows);
-    }
-
     return Container(
       padding: EdgeInsets.only(top: 12, bottom: 12, right: style.margin),
       width: style.showLineNumbers ? gutterWidth : null,
@@ -90,7 +82,7 @@ class GutterWidget extends StatelessWidget {
         continue;
       }
 
-      tableRows[lineIndex].children![_lineNumberColumn] = Text(
+      tableRows[lineIndex].children[_lineNumberColumn] = Text(
         style.showLineNumbers ? '${i + 1}' : ' ',
         style: style.textStyle,
         textAlign: style.textAlign,
@@ -108,49 +100,11 @@ class GutterWidget extends StatelessWidget {
       if (lineIndex == null || lineIndex >= tableRows.length) {
         continue;
       }
-      tableRows[lineIndex].children![_issueColumn] = GutterErrorWidget(
-        issue,
-        style.errorPopupTextStyle ??
-            (throw Exception('Error popup style should never be null')),
-      );
+
     }
   }
 
-  void _fillFoldToggles(List<TableRow> tableRows) {
-    final code = codeController.code;
 
-    for (final block in code.foldableBlocks) {
-      final lineIndex = _lineIndexToTableRowIndex(block.firstLine);
-      if (lineIndex == null) {
-        continue;
-      }
-
-      final isFolded = code.foldedBlocks.contains(block);
-
-      tableRows[lineIndex].children![_foldingColumn] = FoldToggle(
-        color: style.textStyle?.color,
-        isFolded: isFolded,
-        onTap: isFolded
-            ? () => codeController.unfoldAt(block.firstLine)
-            : () => codeController.foldAt(block.firstLine),
-      );
-    }
-
-    // Add folded blocks that are not considered as a valid foldable block,
-    // but should be folded because they were folded before becoming invalid.
-    for (final block in code.foldedBlocks) {
-      final lineIndex = _lineIndexToTableRowIndex(block.firstLine);
-      if (lineIndex == null || lineIndex >= tableRows.length) {
-        continue;
-      }
-
-      tableRows[lineIndex].children![_foldingColumn] = FoldToggle(
-        color: style.textStyle?.color,
-        isFolded: true,
-        onTap: () => codeController.unfoldAt(block.firstLine),
-      );
-    }
-  }
 
   int? _lineIndexToTableRowIndex(int line) {
     return codeController.code.hiddenLineRanges.cutLineIndexIfVisible(line);
