@@ -23,7 +23,7 @@ To run **CodeInk** locally using Flutter Web, follow these steps:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/CodeInk.git
+   git clone https://github.com/ildysilva/CodeInk.git
    cd CodeInk
    ```
 
