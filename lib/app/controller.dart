@@ -23,17 +23,38 @@ class Controller extends ChangeNotifier {
   static ValueNotifier<ThemeType> selectedTheme =
       ValueNotifier(ThemeType.dracula);
 
-  static ValueNotifier<bool> showLineNumbers = ValueNotifier(true);
-  static ValueNotifier<List<Color>> backgroundColor =
-      ValueNotifier<List<Color>>([...gradients.first]);
+  static ValueNotifier<GradientPalette> backgroundColor =
+      ValueNotifier<GradientPalette>(GradientPalette.AquaSplash);
   static ValueNotifier<double> padding = ValueNotifier(25);
-  setColor(List<Color> newColor) {
+  static ValueNotifier<double> opactity = ValueNotifier(0.8);
+  static ValueNotifier<bool> showLines = ValueNotifier(true);
+  static ValueNotifier<double> borderRadius = ValueNotifier(20);
+
+
+  setColor(GradientPalette newColor) {
     backgroundColor.value = newColor;
     notifyListeners();
   }
 
+
+  setOpactivity(double newOpactity){
+    opactity.value = newOpactity;
+    notifyListeners();
+  }
   setPadding(double newPaddin) {
     padding.value = newPaddin;
+    notifyListeners();
+  }
+
+   setShowLines(bool v) {
+    showLines.value = v;
+    notifyListeners();
+
+  }
+
+  void setBorderRadius(double v) {
+
+    borderRadius.value=v;
     notifyListeners();
   }
 }

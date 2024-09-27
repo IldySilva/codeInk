@@ -1,12 +1,10 @@
-// ignore_for_file: parameter_assignments
 
 import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import '../../../language/highlight.dart';
+import '../../../../../main.dart';
 import '../../../language/src/mode.dart';
 import '../../flutter_code_editor.dart';
 import '../code/code_edit_result.dart';

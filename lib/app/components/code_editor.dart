@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:print_script/app/consts/const_default_gradients.dart';
 import 'package:print_script/app/controller.dart';
 
 import 'package:print_script/app/components/toolbar.dart';
@@ -38,33 +39,39 @@ class _CodeEditorState extends State<CodeEditor> {
         controller: widgetsToImageController,
         child: ListenableBuilder(
           builder: (context, value) {
-            return Container(
+            return AnimatedContainer(
               padding: EdgeInsets.all(Controller.padding.value),
               decoration: BoxDecoration(
                   gradient: LinearGradient(
-                      colors: Controller.backgroundColor.value)),
+                      colors: Controller.backgroundColor.value.gradient)),
+              duration: const Duration(milliseconds: 400),
               child: Flexible(
                 child: Stack(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(Controller.borderRadius.value),
                       child: ValueListenableBuilder(
                         builder: (context,theme,_) {
                           return CodeTheme(
                               data: CodeThemeData(styles: theme.themeValue),
-                              child: Builder(
-                                builder: (context) {
-                                  return CodeField(
-                                    wrap: true,
-                                    gutterStyle: GutterStyle(
-                                        showFoldingHandles: false,
-                                        showErrors: false,
-                                        showLineNumbers:
-                                            Controller.showLineNumbers.value),
-                                    controller: CodeController(
-                                        text: Controller.code, language: Controller.selectedLanguage.value.languageValue)
-                                  );
-                                }
+                              child: AnimatedOpacity(
+                                opacity: Controller.opactity.value,
+                                duration: const Duration(milliseconds: 300),
+                                child: Builder(
+                                  builder: (context) {
+                                    return CodeField(
+                                      wrap: true,
+                                      gutterStyle: GutterStyle(
+
+                                          showFoldingHandles: false,
+                                          showErrors: false,
+                                          showLineNumbers:
+                                              Controller.showLines.value),
+                                      controller: CodeController(
+                                          text: Controller.code, language: Controller.selectedLanguage.value.languageValue)
+                                    );
+                                  }
+                                ),
                               ));
                         }, valueListenable: Controller.selectedTheme,
                       ),
@@ -104,7 +111,7 @@ class _CodeEditorState extends State<CodeEditor> {
                               return AnimatedContainer(
                                   duration:const Duration(milliseconds: 200),
                                   decoration: BoxDecoration(
-                                    color: onHover? Theme.of(context).primaryColor:Colors.transparent,
+                                    color: onHover? Theme.of(context).colorScheme.onPrimaryContainer:Colors.transparent,
 
                                     borderRadius: const BorderRadius.only(topRight: Radius.circular(10),bottomLeft: Radius.circular(10)),
                                   ),

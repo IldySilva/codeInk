@@ -5,10 +5,10 @@ class WidgetsToImageWrapper extends StatelessWidget {
   final Widget? child;
   final WidgetsToImageController controller;
 
-  const WidgetsToImageWrapper({    Key? key,
+  const WidgetsToImageWrapper({    super.key,
     required this.child,
     required this.controller,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
