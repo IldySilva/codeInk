@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 import '../code_theme/code_theme.dart';
 import '../gutter/gutter.dart';
@@ -91,8 +90,6 @@ class CodeField extends StatefulWidget {
 }
 
 class _CodeFieldState extends State<CodeField> {
-  // Add a controller
-  LinkedScrollControllerGroup? _controllers;
   ScrollController? _numberScroll;
   ScrollController? _codeScroll;
   ScrollController? _horizontalCodeScroll;
@@ -118,9 +115,6 @@ class _CodeFieldState extends State<CodeField> {
   @override
   void initState() {
     super.initState();
-    _controllers = LinkedScrollControllerGroup();
-    _numberScroll = _controllers?.addAndGet();
-    _codeScroll = _controllers?.addAndGet();
 
     widget.controller.addListener(_onTextChanged);
     widget.controller.addListener(_updatePopupOffset);
@@ -128,8 +122,6 @@ class _CodeFieldState extends State<CodeField> {
     _horizontalCodeScroll = ScrollController();
     _focusNode = widget.focusNode ?? FocusNode();
     _focusNode!.attach(context, onKeyEvent: _onKeyEvent);
-
-
 
     disableSpellCheckIfWeb();
 
@@ -163,10 +155,8 @@ class _CodeFieldState extends State<CodeField> {
     oldWidget.controller.removeListener(_onTextChanged);
     oldWidget.controller.removeListener(_updatePopupOffset);
 
-
     widget.controller.addListener(_onTextChanged);
     widget.controller.addListener(_updatePopupOffset);
-
   }
 
   void rebuild() {
@@ -383,8 +373,4 @@ class _CodeFieldState extends State<CodeField> {
       0,
     );
   }
-
-
-
-
 }

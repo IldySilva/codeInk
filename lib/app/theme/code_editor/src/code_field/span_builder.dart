@@ -5,6 +5,7 @@ import '../code/code.dart';
 import '../code/text_style.dart';
 import '../code_theme/code_theme_data.dart';
 import '../highlight/node.dart';
+
 class SpanBuilder {
   final Code code;
   final CodeThemeData? theme;

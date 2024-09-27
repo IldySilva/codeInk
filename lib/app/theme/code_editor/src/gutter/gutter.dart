@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../code_field/code_controller.dart';
@@ -100,11 +99,8 @@ class GutterWidget extends StatelessWidget {
       if (lineIndex == null || lineIndex >= tableRows.length) {
         continue;
       }
-
     }
   }
-
-
 
   int? _lineIndexToTableRowIndex(int line) {
     return codeController.code.hiddenLineRanges.cutLineIndexIfVisible(line);

@@ -1,4 +1,3 @@
-
 import '../../../language/src/mode.dart';
 import '../../../language/src/node.dart';
 import '../../../language/src/result.dart';

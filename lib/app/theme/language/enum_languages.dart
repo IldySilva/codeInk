@@ -1,7 +1,4 @@
-
 import 'dart:convert';
-
-import 'package:print_script/app/theme/language/languages/delphi.dart';
 
 import 'languages/ada.dart';
 import 'languages/apache.dart';
@@ -18,6 +15,7 @@ import 'languages/cs.dart';
 import 'languages/css.dart';
 import 'languages/d.dart';
 import 'languages/dart.dart';
+import 'languages/delphi.dart';
 import 'languages/diff.dart';
 import 'languages/django.dart';
 import 'languages/dockerfile.dart';
@@ -36,7 +34,6 @@ import 'languages/java.dart';
 import 'languages/javascript.dart';
 import 'languages/julia.dart';
 import 'languages/kotlin.dart';
-import 'languages/livescript.dart';
 import 'languages/lua.dart';
 import 'languages/makefile.dart';
 import 'languages/markdown.dart';
@@ -52,12 +49,10 @@ import 'languages/processing.dart';
 import 'languages/properties.dart';
 import 'languages/python.dart';
 import 'languages/r.dart';
-import 'languages/roboconf.dart';
 import 'languages/ruby.dart';
 import 'languages/ruleslanguage.dart';
 import 'languages/rust.dart';
 import 'languages/scala.dart';
-import 'languages/scheme.dart';
 import 'languages/scss.dart';
 import 'languages/shell.dart';
 import 'languages/sql.dart';
@@ -147,7 +142,7 @@ enum LanguageTypes {
   yaml,
 }
 
- Map<LanguageTypes, dynamic> builtinLanguagesMap = {
+Map<LanguageTypes, dynamic> builtinLanguagesMap = {
   LanguageTypes.ada: ada,
   LanguageTypes.apache: apache,
   LanguageTypes.arcade: arcade,
@@ -227,4 +222,3 @@ extension BuiltinLanguageTypeExtension on LanguageTypes {
     return builtinLanguagesMap[this];
   }
 }
-

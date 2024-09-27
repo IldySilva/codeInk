@@ -1,5 +1,3 @@
-
-
 import 'enum_theme_type.dart';
 import 'themes/a11y-dark.dart';
 import 'themes/a11y-light.dart';
@@ -11,24 +9,15 @@ import 'themes/arta.dart';
 import 'themes/ascetic.dart';
 import 'themes/atelier-cave-dark.dart';
 import 'themes/atelier-cave-light.dart';
-import 'themes/atelier-dune-dark.dart';
 import 'themes/atelier-dune-light.dart';
-import 'themes/atelier-estuary-dark.dart';
 import 'themes/atelier-estuary-light.dart';
-import 'themes/atelier-forest-dark.dart';
 import 'themes/atelier-forest-light.dart';
 import 'themes/atelier-heath-dark.dart';
 import 'themes/atelier-heath-light.dart';
-import 'themes/atelier-lakeside-dark.dart';
-import 'themes/atelier-lakeside-light.dart';
 import 'themes/atelier-plateau-dark.dart';
-import 'themes/atelier-plateau-light.dart';
 import 'themes/atelier-savanna-dark.dart';
-import 'themes/atelier-savanna-light.dart';
 import 'themes/atelier-seaside-dark.dart';
-import 'themes/atelier-seaside-light.dart';
 import 'themes/atelier-sulphurpool-dark.dart';
-import 'themes/atelier-sulphurpool-light.dart';
 import 'themes/atom-one-dark-reasonable.dart';
 import 'themes/atom-one-dark.dart';
 import 'themes/atom-one-light.dart';
@@ -103,24 +92,15 @@ const Map<ThemeType, dynamic> themeMap = {
   ThemeType.ascetic: asceticTheme,
   ThemeType.atelierCaveDark: atelierCaveDarkTheme,
   ThemeType.atelierCaveLight: atelierCaveLightTheme,
-  ThemeType.atelierDuneDark: atelierDuneDarkTheme,
   ThemeType.atelierDuneLight: atelierDuneLightTheme,
-  ThemeType.atelierEstuaryDark: atelierEstuaryDarkTheme,
   ThemeType.atelierEstuaryLight: atelierEstuaryLightTheme,
-  ThemeType.atelierForestDark: atelierForestDarkTheme,
   ThemeType.atelierForestLight: atelierForestLightTheme,
   ThemeType.atelierHeathDark: atelierHeathDarkTheme,
   ThemeType.atelierHeathLight: atelierHeathLightTheme,
-  ThemeType.atelierLakesideDark: atelierLakesideDarkTheme,
-  ThemeType.atelierLakesideLight: atelierLakesideLightTheme,
   ThemeType.atelierPlateauDark: atelierPlateauDarkTheme,
-  ThemeType.atelierPlateauLight: atelierPlateauLightTheme,
   ThemeType.atelierSavannaDark: atelierSavannaDarkTheme,
-  ThemeType.atelierSavannaLight: atelierSavannaLightTheme,
   ThemeType.atelierSeasideDark: atelierSeasideDarkTheme,
-  ThemeType.atelierSeasideLight: atelierSeasideLightTheme,
   ThemeType.atelierSulphurpoolDark: atelierSulphurpoolDarkTheme,
-  ThemeType.atelierSulphurpoolLight: atelierSulphurpoolLightTheme,
   ThemeType.atomOneDarkReasonable: atomOneDarkReasonableTheme,
   ThemeType.atomOneDark: atomOneDarkTheme,
   ThemeType.atomOneLight: atomOneLightTheme,

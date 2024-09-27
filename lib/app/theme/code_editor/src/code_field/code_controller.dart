@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:collection/collection.dart';
@@ -78,14 +77,12 @@ class CodeController extends TextEditingController {
   final _styleList = <TextStyle>[];
   final _modifierMap = <String, CodeModifier>{};
 
-
   /// The last [TextSpan] returned from [buildTextSpan].
   ///
   /// This can be used in tests to make sure that the updated text  was actually
   /// requested by the widget and thus notifications are done right.
   @visibleForTesting
   TextSpan? lastTextSpan;
-
 
   CodeController({
     String? text,
@@ -126,10 +123,8 @@ class CodeController extends TextEditingController {
       _styleList.addAll(patternMap!.values);
     }
 
-
     unawaited(analyzeCode());
   }
-
 
   void _scheduleAnalysis() {
     _debounce?.cancel();
@@ -150,7 +145,6 @@ class CodeController extends TextEditingController {
     final result = await _analyzer.analyze(codeSentToAnalysis);
 
     if (_code.text != codeSentToAnalysis.text) {
-
       return;
     }
 
@@ -231,14 +225,8 @@ class CodeController extends TextEditingController {
   }
 
   KeyEventResult onKey(KeyEvent event) {
-
     return KeyEventResult.ignored; // The framework will handle.
   }
-
-
-
-
-
 
   String get fullText => _code.text;
 
@@ -309,14 +297,10 @@ class CodeController extends TextEditingController {
           );
         }
       }
-
     }
 
     super.value = newValue;
-
   }
-
-
 
   void outdentSelection() {
     final tabSpaces = params.tabSpaces;
@@ -524,8 +508,6 @@ class CodeController extends TextEditingController {
     final finalVisibleSelection =
         _code.hiddenRanges.cutSelection(finalFullSelection);
 
-
-
     super.value = TextEditingValue(
       text: _code.visibleText,
       selection: finalVisibleSelection,
@@ -689,7 +671,6 @@ class CodeController extends TextEditingController {
       style: style,
     );
 
-
     return spanBeforeSearch;
   }
 
@@ -717,11 +698,7 @@ class CodeController extends TextEditingController {
     _dismissSuggestions();
   }
 
-  void _dismissSuggestions() {
-
-  }
-
-
+  void _dismissSuggestions() {}
 
   @override
   void dispose() {

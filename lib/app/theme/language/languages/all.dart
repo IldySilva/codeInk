@@ -76,7 +76,7 @@ import 'yaml.dart';
 import 'vue.dart';
 import 'graphql.dart';
 
-final builtinLanguages = {
+final languages = {
   'actionscript': actionscript,
   'ada': ada,
   'apache': apache,
@@ -155,4 +155,3 @@ final builtinLanguages = {
   'xquery': xquery,
   'yaml': yaml,
 };
-final allLanguages = {...builtinLanguages};

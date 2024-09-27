@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:print_script/app/utils/file_name_generator.dart';
 
-import 'components/code_editor.dart';
-import 'components/toolbar.dart';
+import 'components/custom_code_editor.dart';
+import 'components/custom_side_tool_bar.dart';
 
 class App extends StatefulWidget {
   App({super.key});
@@ -72,18 +73,18 @@ class _AppState extends State<App> {
                                   "Made by ildeberto",
                                 ),
                                 icon: const Icon(FontAwesome.fire_solid),
-                                onPressed: () {},
+                                onPressed: () =>launchDevProfile(),
                               ),
                               const SizedBox(
                                 width: 10,
                               ),
                               TextButton.icon(
-                                label: const Text(
-                                  "Github",
-                                ),
-                                icon: const Icon(FontAwesome.github_alt_brand),
-                                onPressed: () {},
-                              ),
+                                  label: const Text(
+                                    "Github",
+                                  ),
+                                  icon:
+                                      const Icon(FontAwesome.github_alt_brand),
+                                  onPressed: () => launchGithub()),
                             ],
                           ),
                         ),

@@ -11,24 +11,15 @@ enum ThemeType {
   ascetic,
   atelierCaveDark,
   atelierCaveLight,
-  atelierDuneDark,
   atelierDuneLight,
-  atelierEstuaryDark,
   atelierEstuaryLight,
-  atelierForestDark,
   atelierForestLight,
   atelierHeathDark,
   atelierHeathLight,
-  atelierLakesideDark,
-  atelierLakesideLight,
   atelierPlateauDark,
-  atelierPlateauLight,
   atelierSavannaDark,
-  atelierSavannaLight,
   atelierSeasideDark,
-  atelierSeasideLight,
   atelierSulphurpoolDark,
-  atelierSulphurpoolLight,
   atomOneDarkReasonable,
   atomOneDark,
   atomOneLight,
@@ -92,7 +83,6 @@ enum ThemeType {
   xt256,
   zenburn,
 }
-
 
 extension ThemeTypeExtension on ThemeType {
   String get cleanName {

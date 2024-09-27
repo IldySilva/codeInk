@@ -4,7 +4,6 @@ class Mode {
 
   List<String>? aliases;
 
-  /// `String | Map<String, [String, int]>`
   dynamic keywords;
   String? illegal;
   bool? case_insensitive;

@@ -42,17 +42,17 @@ class FoldableBlock extends InclusiveRange with EquatableMixin {
       case FoldableBlockType.multilineComment:
         return true;
       case FoldableBlockType.braces:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case FoldableBlockType.brackets:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case FoldableBlockType.parentheses:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case FoldableBlockType.indent:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case FoldableBlockType.imports:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case FoldableBlockType.union:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
     }
 
     return false;
@@ -64,19 +64,19 @@ class FoldableBlock extends InclusiveRange with EquatableMixin {
       case FoldableBlockType.imports:
         return true;
       case FoldableBlockType.braces:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case FoldableBlockType.brackets:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case FoldableBlockType.parentheses:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case FoldableBlockType.indent:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case FoldableBlockType.multilineComment:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case FoldableBlockType.singleLineComment:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
       case FoldableBlockType.union:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
     }
 
     return false;

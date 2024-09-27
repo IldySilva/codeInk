@@ -160,7 +160,7 @@ class Highlight {
           ? '\\.?(?:' + c.begin! + ')\\.?'
           : c.begin;
     }).toList()
-      ..addAll([mode.terminator_end, mode.illegal]))
+          ..addAll([mode.terminator_end, mode.illegal]))
         .where((x) => x != null && x.isNotEmpty)
         .toList();
 
@@ -263,11 +263,11 @@ class Highlight {
   }
 
   Result _parse(
-      String source, {
-        String? language,
-        bool ignoreIllegals = false,
-        Mode? continuation,
-      }) {
+    String source, {
+    String? language,
+    bool ignoreIllegals = false,
+    Mode? continuation,
+  }) {
     var langMode = _languageMode = _getLanguage(language) ?? plaintext;
     // TODO: strategy
     // if (_languageMode == null) {
@@ -356,12 +356,12 @@ class Highlight {
 
       var result = explicit
           ? _parse(mode_buffer,
-          language: top!.subLanguage!.first,
-          ignoreIllegals: true,
-          continuation: continuations[top!.subLanguage!.first])
+              language: top!.subLanguage!.first,
+              ignoreIllegals: true,
+              continuation: continuations[top!.subLanguage!.first])
           : _parseAuto(mode_buffer,
-          languageSubset:
-          top!.subLanguage!.isNotEmpty ? top!.subLanguage : null);
+              languageSubset:
+                  top!.subLanguage!.isNotEmpty ? top!.subLanguage : null);
 
       if (top!.relevance! > 0) {
         relevance += result.relevance!;
@@ -459,14 +459,9 @@ class Highlight {
       while (true) {
         match = top!.terminators
             ?.allMatches(source, index)
-            ?.firstWhereOrNull((m) => true);
+            .firstWhereOrNull((m) => true);
 
         if (match == null) break;
-        // print(top.terminators);
-        // print('$index, ${match.start}');
-        // print(match[0].replaceAll(RegExp(r'\s'), '*'));
-        // print(result);
-        // print('');
 
         count = _processLexeme(substring(source, index, match.start), match[0]);
         index = count + match.start;
@@ -477,8 +472,6 @@ class Highlight {
           _pop();
         }
       }
-      // print(relevance);
-      // print(result);
       return Result(
         language: language,
         relevance: relevance,

@@ -1,8 +1,9 @@
+import 'package:dartx/dartx.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:print_script/app/controller.dart';
 import 'package:print_script/app/theme/language/enum_languages.dart';
-import 'package:print_script/app/utils/widget_to_image_controller.dart';
+import 'package:print_script/app/widget_to_image_controller.dart';
 import '../consts/const_default_gradients.dart';
 import '../theme/enum_theme_type.dart';
 
@@ -270,13 +271,22 @@ class CodeToolBar extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () async {
-                      widgetsToImageController.capture();
+                      Controller().setLoading(true);
+                     await  widgetsToImageController.capture();
+                      Controller().setLoading(false);
+
                     },
-                    child: const Padding(
+                    child:  Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "Export image",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      child: ValueListenableBuilder(
+                        builder: (context,value,_) {
+                          if(value)
+                            return Center(child: LinearProgressIndicator());
+                          return Text(
+                            "Export image",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          );
+                        }, valueListenable: Controller.exporting,
                       ),
                     )),
                 MaterialButton(

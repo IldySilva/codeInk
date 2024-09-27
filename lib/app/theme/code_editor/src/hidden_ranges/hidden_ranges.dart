@@ -352,8 +352,6 @@ class HiddenRanges {
     );
   }
 
-
-
   @override
   int get hashCode => Object.hash(
         Object.hashAll(ranges),

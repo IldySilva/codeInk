@@ -1,4 +1,3 @@
-
 import '../../../../language/src/result.dart';
 import 'abstract_single_line_comment_parser.dart';
 import 'highlight_single_line_comment_parser.dart';
