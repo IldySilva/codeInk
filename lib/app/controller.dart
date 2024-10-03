@@ -57,4 +57,10 @@ class Controller extends ChangeNotifier {
     borderRadius.value = v;
     notifyListeners();
   }
+
+  void reset() {
+
+
+
+  }
 }
