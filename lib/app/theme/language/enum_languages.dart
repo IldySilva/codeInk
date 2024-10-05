@@ -97,8 +97,6 @@ enum LanguageTypes {
   gradle,
   groovy,
   haskell,
-  htmlbars,
-  http,
   ini,
   java,
   javascript,

@@ -90,7 +90,6 @@ final gradients = [
   [const Color(0xFF434343), const Color(0xFF1F1F1F)],
 ];
 
-// Enum para os gradientes
 enum GradientPalette {
   White,
   Sunset,

@@ -31,7 +31,6 @@ import 'go.dart';
 import 'gradle.dart';
 import 'groovy.dart';
 import 'haskell.dart';
-import 'http.dart';
 import 'java.dart';
 import 'javascript.dart';
 import 'json.dart';
@@ -110,7 +109,6 @@ final languages = {
   'gradle': gradle,
   'groovy': groovy,
   'haskell': haskell,
-  'http': http,
   'java': java,
   'javascript': javascript,
   'json': json,
