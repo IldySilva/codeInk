@@ -17,14 +17,11 @@ import 'css.dart';
 import 'd.dart';
 import 'dart.dart';
 import 'delphi.dart';
-import 'diff.dart';
 import 'django.dart';
-import 'dockerfile.dart';
 import 'dos.dart';
 import 'dsconfig.dart';
 import 'elixir.dart';
 import 'erlang.dart';
-import 'excel.dart';
 import 'fortran.dart';
 import 'fsharp.dart';
 import 'go.dart';
@@ -34,7 +31,6 @@ import 'haskell.dart';
 import 'java.dart';
 import 'javascript.dart';
 import 'json.dart';
-import 'julia.dart';
 import 'kotlin.dart';
 import 'lisp.dart';
 import 'livecodeserver.dart';
@@ -56,7 +52,6 @@ import 'python.dart';
 import 'r.dart';
 import 'roboconf.dart';
 import 'ruby.dart';
-import 'ruleslanguage.dart';
 import 'rust.dart';
 import 'scala.dart';
 import 'scheme.dart';
@@ -95,14 +90,11 @@ final languages = {
   'd': d,
   'dart': dart,
   'delphi': delphi,
-  'diff': diff,
   'django': django,
-  'dockerfile': dockerfile,
   'dos': dos,
   'dsconfig': dsconfig,
   'elixir': elixir,
   'erlang': erlang,
-  'excel': excel,
   'fortran': fortran,
   'fsharp': fsharp,
   'go': go,
@@ -112,7 +104,6 @@ final languages = {
   'java': java,
   'javascript': javascript,
   'json': json,
-  'julia': julia,
   'kotlin': kotlin,
   'lisp': lisp,
   'livecodeserver': livecodeserver,
@@ -134,7 +125,6 @@ final languages = {
   'r': r,
   'roboconf': roboconf,
   'ruby': ruby,
-  'ruleslanguage': ruleslanguage,
   'rust': rust,
   'scala': scala,
   'scheme': scheme,

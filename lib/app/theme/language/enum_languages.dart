@@ -16,14 +16,11 @@ import 'languages/css.dart';
 import 'languages/d.dart';
 import 'languages/dart.dart';
 import 'languages/delphi.dart';
-import 'languages/diff.dart';
 import 'languages/django.dart';
-import 'languages/dockerfile.dart';
 import 'languages/dos.dart';
 import 'languages/dsconfig.dart';
 import 'languages/elixir.dart';
 import 'languages/erlang.dart';
-import 'languages/excel.dart';
 import 'languages/fortran.dart';
 import 'languages/fsharp.dart';
 import 'languages/go.dart';
@@ -32,7 +29,6 @@ import 'languages/groovy.dart';
 import 'languages/haskell.dart';
 import 'languages/java.dart';
 import 'languages/javascript.dart';
-import 'languages/julia.dart';
 import 'languages/kotlin.dart';
 import 'languages/lua.dart';
 import 'languages/makefile.dart';
@@ -50,7 +46,6 @@ import 'languages/properties.dart';
 import 'languages/python.dart';
 import 'languages/r.dart';
 import 'languages/ruby.dart';
-import 'languages/ruleslanguage.dart';
 import 'languages/rust.dart';
 import 'languages/scala.dart';
 import 'languages/scss.dart';
@@ -121,14 +116,11 @@ enum LanguageTypes {
   r,
   rib,
   ruby,
-  ruleslanguage,
   rust,
   scala,
-  scilab,
   scss,
   shell,
   sql,
-  stylus,
   swift,
   typescript,
   vbnet,
@@ -157,14 +149,11 @@ Map<LanguageTypes, dynamic> builtinLanguagesMap = {
   LanguageTypes.d: d,
   LanguageTypes.dart: dart,
   LanguageTypes.delphi: delphi,
-  LanguageTypes.diff: diff,
   LanguageTypes.django: django,
-  LanguageTypes.dockerfile: dockerfile,
   LanguageTypes.dos: dos,
   LanguageTypes.dsconfig: dsconfig,
   LanguageTypes.elixir: elixir,
   LanguageTypes.erlang: erlang,
-  LanguageTypes.excel: excel,
   LanguageTypes.fortran: fortran,
   LanguageTypes.fsharp: fsharp,
   LanguageTypes.go: go,
@@ -174,7 +163,6 @@ Map<LanguageTypes, dynamic> builtinLanguagesMap = {
   LanguageTypes.java: java,
   LanguageTypes.javascript: javascript,
   LanguageTypes.json: json,
-  LanguageTypes.julia: julia,
   LanguageTypes.kotlin: kotlin,
   LanguageTypes.lua: lua,
   LanguageTypes.makefile: makefile,
@@ -192,7 +180,6 @@ Map<LanguageTypes, dynamic> builtinLanguagesMap = {
   LanguageTypes.python: python,
   LanguageTypes.r: r,
   LanguageTypes.ruby: ruby,
-  LanguageTypes.ruleslanguage: ruleslanguage,
   LanguageTypes.rust: rust,
   LanguageTypes.scala: scala,
   LanguageTypes.scss: scss,

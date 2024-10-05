@@ -1,4 +1,3 @@
-import 'package:dartx/dartx.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:print_script/app/controller.dart';

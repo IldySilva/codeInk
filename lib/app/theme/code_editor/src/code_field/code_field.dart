@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../code_theme/code_theme.dart';
 import '../gutter/gutter.dart';
 import '../line_numbers/gutter_style.dart';
-import '../sizes.dart';
 import 'code_controller.dart';
 import 'default_styles.dart';
 import 'js_workarounds/js_workarounds.dart';
@@ -95,10 +94,7 @@ class _CodeFieldState extends State<CodeField> {
   ScrollController? _horizontalCodeScroll;
   final _codeFieldKey = GlobalKey();
 
-  OverlayEntry? _suggestionsPopup;
   OverlayEntry? _searchPopup;
-  Offset _normalPopupOffset = Offset.zero;
-  Offset _flippedPopupOffset = Offset.zero;
   double painterWidth = 0;
   double painterHeight = 0;
 
@@ -316,18 +312,7 @@ class _CodeFieldState extends State<CodeField> {
   }
 
   void _updatePopupOffset() {
-    final textPainter = _getTextPainter(widget.controller.text);
-    final caretHeight = _getCaretHeight(textPainter);
 
-    final leftOffset = _getPopupLeftOffset(textPainter);
-    final normalTopOffset = _getPopupTopOffset(textPainter, caretHeight);
-    final flippedTopOffset = normalTopOffset -
-        (Sizes.autocompletePopupMaxHeight + caretHeight + Sizes.caretPadding);
-
-    setState(() {
-      _normalPopupOffset = Offset(leftOffset, normalTopOffset);
-      _flippedPopupOffset = Offset(leftOffset, flippedTopOffset);
-    });
   }
 
   TextPainter _getTextPainter(String text) {
