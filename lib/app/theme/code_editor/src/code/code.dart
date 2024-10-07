@@ -6,10 +6,6 @@ import '../highlight/result.dart';
 import '../../../language/src/mode.dart';
 import '../../../language/src/result.dart';
 import '../code_field/text_editing_value.dart';
-import '../folding/foldable_block.dart';
-import '../folding/foldable_block_matcher.dart';
-import '../folding/invalid_foldable_block.dart';
-import '../folding/parsers/parser_factory.dart';
 import '../hidden_ranges/hidden_line_ranges.dart';
 import '../hidden_ranges/hidden_line_ranges_builder.dart';
 import '../hidden_ranges/hidden_range.dart';
@@ -17,7 +13,6 @@ import '../hidden_ranges/hidden_ranges.dart';
 import '../hidden_ranges/hidden_ranges_builder.dart';
 import '../named_sections/named_section.dart';
 import '../named_sections/parsers/abstract.dart';
-import '../service_comment_filter/service_comment_filter.dart';
 import '../single_line_comments/parser/single_line_comment_parser.dart';
 import '../single_line_comments/parser/single_line_comments.dart';
 import '../single_line_comments/single_line_comment.dart';
@@ -31,12 +26,9 @@ import 'text_range.dart';
 
 class Code {
   final String text;
-  final List<FoldableBlock> foldableBlocks;
-  final Set<FoldableBlock> foldedBlocks;
   final HiddenLineRanges hiddenLineRanges;
   final HiddenRanges hiddenRanges;
   final Result? highlighted;
-  final List<InvalidFoldableBlock> invalidBlocks;
   final CodeLines lines;
   final Map<String, NamedSection> namedSections;
   final Result? visibleHighlighted;
@@ -61,15 +53,7 @@ class Code {
       singleLineCommentSequences: sequences,
     );
 
-    final serviceComments = ServiceCommentFilter.filter(
-      commentParser.comments,
-      namedSectionParser: namedSectionParser,
-    );
 
-    final serviceCommentsNodesSet = serviceComments.sources;
-
-    final List<FoldableBlock> foldableBlocks;
-    var invalidBlocks = List<InvalidFoldableBlock>.empty();
 
     final lines = CodeLinesBuilder.textToCodeLines(
       text: text,
@@ -77,18 +61,8 @@ class Code {
     );
 
     if (highlighted == null || language == null) {
-      foldableBlocks = const [];
     } else {
-      final parser = FoldableBlockParserFactory.provideParser(language);
 
-      parser.parse(
-        highlighted: highlighted,
-        serviceCommentsSources: serviceCommentsNodesSet,
-        lines: lines,
-      );
-
-      foldableBlocks = parser.blocks;
-      invalidBlocks = parser.invalidBlocks;
     }
 
     final sections = namedSectionParser?.parse(
@@ -114,14 +88,9 @@ class Code {
       lines,
     );
 
-    final commentsHiddenRanges = _commentsToHiddenRanges(
-      serviceComments,
-    );
-
     final hiddenRangesBuilder = HiddenRangesBuilder.fromMaps(
       {
         String: visibleSectionsHiddenRanges,
-        int: commentsHiddenRanges,
       },
       textLength: text.length,
     );
@@ -134,13 +103,10 @@ class Code {
 
     return Code._(
       text: text,
-      foldableBlocks: foldableBlocks,
-      foldedBlocks: {},
       hiddenLineRanges: hiddenLineRangesBuilder.hiddenLineRanges,
       hiddenRanges: hiddenRanges,
       hiddenRangesBuilder: hiddenRangesBuilder,
       highlighted: highlighted,
-      invalidBlocks: invalidBlocks,
       lines: lines,
       namedSections: sectionsMap,
       visibleHighlighted:
@@ -152,13 +118,10 @@ class Code {
 
   const Code._({
     required this.text,
-    required this.foldableBlocks,
-    required this.foldedBlocks,
     required this.hiddenLineRanges,
     required this.hiddenRanges,
     required HiddenRangesBuilder hiddenRangesBuilder,
     required this.highlighted,
-    this.invalidBlocks = const [],
     required this.lines,
     required this.namedSections,
     required this.visibleHighlighted,
@@ -168,8 +131,6 @@ class Code {
 
   static const empty = Code._(
     text: '',
-    foldableBlocks: [],
-    foldedBlocks: {},
     hiddenLineRanges: HiddenLineRanges.empty,
     hiddenRanges: HiddenRanges.empty,
     hiddenRangesBuilder: HiddenRangesBuilder.empty,
@@ -263,20 +224,7 @@ class Code {
     return result;
   }
 
-  static Map<int, HiddenRange> _commentsToHiddenRanges(
-    Iterable<SingleLineComment> comments,
-  ) {
-    return <int, HiddenRange>{
-      for (final comment in comments)
-        comment.characterIndex: HiddenRange(
-          comment.characterIndex,
-          comment.characterIndex + comment.outerContent.length,
-          firstLine: comment.lineIndex,
-          lastLine: comment.lineIndex,
-          wholeFirstLine: false,
-        ),
-    };
-  }
+
 
   /// Returns whether the current selection has any read-only part.
   bool isReadOnlySelected(TextRange range) {
@@ -382,12 +330,7 @@ class Code {
     // If there is any folded block that is going to be removed
     // because of `backspace` or `delete`, return unchanged text.
     if (oldSelection.isCollapsed &&
-        visibleAfter.text.length == visibleText.length - 1 &&
-        foldedBlocks.any(
-          (block) =>
-              block.lastLine >= firstChangedLine &&
-              block.lastLine < lastChangedLine,
-        )) {
+        visibleAfter.text.length == visibleText.length - 1) {
       return CodeEditResult(
         fullTextAfter: text,
         linesChanged: const TextRange(start: 0, end: 0),
@@ -421,88 +364,16 @@ class Code {
     );
   }
 
-  Code foldedAt(int line) {
-    final block = _getFoldableBlockByStartLine(line);
-    if (block == null || foldedBlocks.contains(block)) {
-      // ignore: avoid_returning_this
-      return this;
-    }
 
-    final hiddenRange = foldableBlockToHiddenRange(block);
-    final newHiddenRangesBuilder = _hiddenRangesBuilder.copyWithRange(
-      block,
-      hiddenRange,
-    );
 
-    return _copyWithFolding(
-      foldedBlocks: {...foldedBlocks, block},
-      hiddenRangesBuilder: newHiddenRangesBuilder,
-    );
-  }
 
-  Code unfoldedAt(int line) {
-    final block = _getFoldableBlockByStartLine(line);
-    if (block == null || !foldedBlocks.contains(block)) {
-      // ignore: avoid_returning_this
-      return this;
-    }
 
-    return _copyWithFolding(
-      foldedBlocks: {...foldedBlocks}..remove(block),
-      hiddenRangesBuilder: _hiddenRangesBuilder.copyWithoutRange(block),
-    );
-  }
 
-  FoldableBlock? _getFoldableBlockByStartLine(int line) {
-    // It is important that we try to take a block from folded blocks first
-    // and only then from foldable blocks.
-    return foldedBlocks.firstWhereOrNull((block) => block.firstLine == line) ??
-        foldableBlocks.firstWhereOrNull((block) => block.firstLine == line);
-  }
 
-  HiddenRange foldableBlockToHiddenRange(FoldableBlock block) {
-    final firstLine = lines.lines[block.firstLine + 1]; //Keep 1st line visible.
-    final lastLine = lines.lines[block.lastLine];
 
-    // Exclude \n from the last line
-    var endOfRange = lastLine.textRange.end - 1;
-    if (lastLine.text[lastLine.text.length - 1] != '\n') {
-      endOfRange++;
-    }
 
-    return HiddenRange(
-      firstLine.textRange.start - 1, // Includes '\n' before.
-      endOfRange,
-      firstLine: block.firstLine,
-      lastLine: block.lastLine,
-      wholeFirstLine: false, // Some characters of the first line are visible.
-    );
-  }
-
-  /// Folds this code at the same blocks as the [oldCode] is.
-  Code foldedAs(Code oldCode) {
-    final matcher = FoldableBlockMatcher(
-      oldLines: oldCode.lines.lines,
-      newBlocks: foldableBlocks,
-      newLines: lines.lines,
-      oldFoldedBlocks: oldCode.foldedBlocks,
-    );
-
-    final newHiddenRangesBuilder = _hiddenRangesBuilder.copyMergingSourceMap({
-      FoldableBlock: {
-        for (final block in matcher.newFoldedBlocks)
-          block: foldableBlockToHiddenRange(block),
-      },
-    });
-
-    return _copyWithFolding(
-      foldedBlocks: matcher.newFoldedBlocks,
-      hiddenRangesBuilder: newHiddenRangesBuilder,
-    );
-  }
 
   Code _copyWithFolding({
-    required Set<FoldableBlock> foldedBlocks,
     required HiddenRangesBuilder hiddenRangesBuilder,
   }) {
     final hiddenRanges = hiddenRangesBuilder.ranges;
@@ -514,13 +385,10 @@ class Code {
 
     return Code._(
       text: text,
-      foldableBlocks: foldableBlocks,
-      foldedBlocks: foldedBlocks,
       hiddenLineRanges: hiddenLineRangesBuilder.hiddenLineRanges,
       hiddenRanges: hiddenRanges,
       hiddenRangesBuilder: hiddenRangesBuilder,
       highlighted: highlighted,
-      invalidBlocks: invalidBlocks,
       lines: lines,
       namedSections: namedSections,
       visibleHighlighted:

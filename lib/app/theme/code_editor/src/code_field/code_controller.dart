@@ -521,7 +521,6 @@ class CodeController extends TextEditingController {
 
   void _updateCode(String text) {
     final newCode = _createCode(text);
-    _code = newCode.foldedAs(_code);
   }
 
   Code _createCode(String text) {
@@ -542,19 +541,9 @@ class CodeController extends TextEditingController {
     return text;
   }
 
-  void foldAt(int line) {
-    final newCode = _code.foldedAt(line);
-    super.value = _getValueWithCode(newCode);
 
-    _code = newCode;
-  }
 
-  void unfoldAt(int line) {
-    final newCode = _code.unfoldedAt(line);
-    super.value = _getValueWithCode(newCode);
 
-    _code = newCode;
-  }
 
   Set<String> get readOnlySectionNames => _readOnlySectionNames;
 
@@ -584,45 +573,9 @@ class CodeController extends TextEditingController {
     );
   }
 
-  void foldCommentAtLineZero() {
-    final block = _code.foldableBlocks.firstOrNull;
 
-    if (block == null || !block.isComment || block.firstLine != 0) {
-      return;
-    }
 
-    foldAt(0);
-  }
 
-  void foldImports() {
-    // TODO(alexeyinkin): An optimized method to fold multiple blocks, https://github.com/akvelon/flutter-code-editor/issues/106
-    for (final block in _code.foldableBlocks) {
-      if (block.isImports) {
-        foldAt(block.firstLine);
-      }
-    }
-  }
-
-  /// Folds blocks that are outside all of the [names] sections.
-  ///
-  /// For a block to be not folded, it must overlap any of the given sections
-  /// in any way.
-  void foldOutsideSections(Iterable<String> names) {
-    final foldLines = {..._code.foldableBlocks.map((b) => b.firstLine)};
-    final sections = names.map((s) => _code.namedSections[s]).whereNotNull();
-
-    for (final block in _code.foldableBlocks) {
-      for (final section in sections) {
-        if (block.overlaps(section)) {
-          foldLines.remove(block.firstLine);
-          break;
-        }
-      }
-    }
-
-    // TODO(alexeyinkin): An optimized method to fold multiple blocks, https://github.com/akvelon/flutter-code-editor/issues/106
-    foldLines.forEach(foldAt);
-  }
 
   @override
   TextSpan buildTextSpan({
