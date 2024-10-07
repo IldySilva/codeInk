@@ -172,7 +172,7 @@ extension BuiltinLanguageTypeExtension on LanguageTypes {
   String get cleanName {
     return toString()
         .split('.')
-        .last // Remove 'BuiltinLanguageType.'
+        .last
         .replaceAllMapped(RegExp(r'([A-Z])'), (match) => ' ${match.group(0)}')
         .trim();
   }

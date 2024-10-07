@@ -19,25 +19,11 @@ class CodeController extends TextEditingController {
   Mode? get language => _language;
 
   set language(Mode? language) {
-    setLanguage(language, analyzer: const DefaultLocalAnalyzer());
+    setLanguage(language);
   }
 
-  /// `CodeController` uses [analyzer] to generate issues
-  /// that are displayed in gutter widget.
-  ///
-  /// Calls [AbstractAnalyzer.analyze] after change with 500ms debounce.
-  AbstractAnalyzer get analyzer => _analyzer;
-  AbstractAnalyzer _analyzer;
-  set analyzer(AbstractAnalyzer analyzer) {
-    if (_analyzer == analyzer) {
-      return;
-    }
 
-    _analyzer = analyzer;
-    unawaited(analyzeCode());
-  }
 
-  AnalysisResult analysisResult;
   String _lastAnalyzedText = '';
   Timer? _debounce;
 
@@ -87,11 +73,9 @@ class CodeController extends TextEditingController {
   CodeController({
     String? text,
     Mode? language,
-    AbstractAnalyzer analyzer = const DefaultLocalAnalyzer(),
     this.namedSectionParser,
     Set<String> readOnlySectionNames = const {},
     Set<String> visibleSectionNames = const {},
-    this.analysisResult = const AnalysisResult(issues: []),
     this.patternMap,
     this.readOnly = false,
     this.params = const EditorParams(),
@@ -100,11 +84,11 @@ class CodeController extends TextEditingController {
       CloseBlockModifier(),
       TabModifier(),
     ],
-  })  : _analyzer = analyzer,
+  })  :
         _readOnlySectionNames = readOnlySectionNames,
         _code = Code.empty,
         _isTabReplacementEnabled = modifiers.any((e) => e is TabModifier) {
-    setLanguage(language, analyzer: analyzer);
+    setLanguage(language);
     this.visibleSectionNames = visibleSectionNames;
     _code = _createCode(text ?? '');
     fullText = text ?? '';
@@ -122,8 +106,6 @@ class CodeController extends TextEditingController {
       patternList.addAll(patternMap!.keys.map((e) => '($e)'));
       _styleList.addAll(patternMap!.values);
     }
-
-    unawaited(analyzeCode());
   }
 
   void _scheduleAnalysis() {
@@ -135,28 +117,11 @@ class CodeController extends TextEditingController {
       return;
     }
 
-    _debounce = Timer(const Duration(milliseconds: 500), () async {
-      await analyzeCode();
-    });
   }
 
-  Future<void> analyzeCode() async {
-    final codeSentToAnalysis = _code;
-    final result = await _analyzer.analyze(codeSentToAnalysis);
-
-    if (_code.text != codeSentToAnalysis.text) {
-      return;
-    }
-
-    analysisResult = result;
-    _lastAnalyzedText = codeSentToAnalysis.text;
-    notifyListeners();
-  }
 
   void setLanguage(
-    Mode? language, {
-    required AbstractAnalyzer analyzer,
-  }) {
+    Mode? language) {
     if (language == _language) {
       return;
     }
@@ -168,7 +133,6 @@ class CodeController extends TextEditingController {
 
     _language = language;
     _updateCode(_code.text);
-    this.analyzer = analyzer;
     notifyListeners();
   }
 

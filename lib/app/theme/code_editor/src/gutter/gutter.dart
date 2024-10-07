@@ -40,9 +40,7 @@ class GutterWidget extends StatelessWidget {
 
     final tableRows = List.generate(
       code.hiddenLineRanges.visibleLineNumbers.length,
-      // ignore: prefer_const_constructors
       (i) => TableRow(
-        // ignore: prefer_const_literals_to_create_immutables
         children: [
           const SizedBox(),
           const SizedBox(),
@@ -53,9 +51,7 @@ class GutterWidget extends StatelessWidget {
 
     _fillLineNumbers(tableRows);
 
-    if (style.showErrors) {
-      _fillIssues(tableRows);
-    }
+
     return Container(
       padding: EdgeInsets.only(top: 12, bottom: 12, right: style.margin),
       width: style.showLineNumbers ? gutterWidth : null,
@@ -89,18 +85,7 @@ class GutterWidget extends StatelessWidget {
     }
   }
 
-  void _fillIssues(List<TableRow> tableRows) {
-    for (final issue in codeController.analysisResult.issues) {
-      if (issue.line >= codeController.code.lines.length) {
-        continue;
-      }
 
-      final lineIndex = _lineIndexToTableRowIndex(issue.line);
-      if (lineIndex == null || lineIndex >= tableRows.length) {
-        continue;
-      }
-    }
-  }
 
   int? _lineIndexToTableRowIndex(int line) {
     return codeController.code.hiddenLineRanges.cutLineIndexIfVisible(line);
