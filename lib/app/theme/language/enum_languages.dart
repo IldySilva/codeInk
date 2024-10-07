@@ -1,8 +1,5 @@
 import 'dart:convert';
 
-import 'languages/ada.dart';
-import 'languages/apache.dart';
-import 'languages/arcade.dart';
 import 'languages/arduino.dart';
 import 'languages/bash.dart';
 import 'languages/basic.dart';
@@ -13,11 +10,9 @@ import 'languages/coffeescript.dart';
 import 'languages/cpp.dart';
 import 'languages/cs.dart';
 import 'languages/css.dart';
-import 'languages/d.dart';
 import 'languages/dart.dart';
 import 'languages/delphi.dart';
 import 'languages/django.dart';
-import 'languages/dos.dart';
 import 'languages/dsconfig.dart';
 import 'languages/elixir.dart';
 import 'languages/erlang.dart';
@@ -34,7 +29,6 @@ import 'languages/lua.dart';
 import 'languages/makefile.dart';
 import 'languages/markdown.dart';
 import 'languages/matlab.dart';
-import 'languages/nginx.dart';
 import 'languages/objectivec.dart';
 import 'languages/perl.dart';
 import 'languages/pgsql.dart';
@@ -42,7 +36,6 @@ import 'languages/php.dart';
 import 'languages/plaintext.dart';
 import 'languages/powershell.dart';
 import 'languages/processing.dart';
-import 'languages/properties.dart';
 import 'languages/python.dart';
 import 'languages/r.dart';
 import 'languages/ruby.dart';
@@ -61,11 +54,7 @@ import 'languages/yaml.dart';
 import 'src/mode.dart';
 
 enum LanguageTypes {
-  ada,
-  apache,
-  arcade,
   arduino,
-  autoit,
   bash,
   basic,
   brainfuck,
@@ -75,13 +64,10 @@ enum LanguageTypes {
   cpp,
   cs,
   css,
-  d,
   dart,
   delphi,
-  diff,
   django,
   dockerfile,
-  dos,
   dsconfig,
   elixir,
   erlang,
@@ -92,7 +78,6 @@ enum LanguageTypes {
   gradle,
   groovy,
   haskell,
-  ini,
   java,
   javascript,
   json,
@@ -102,8 +87,6 @@ enum LanguageTypes {
   makefile,
   markdown,
   matlab,
-  nginx,
-  nsis,
   objectivec,
   perl,
   pgsql,
@@ -111,7 +94,6 @@ enum LanguageTypes {
   plaintext,
   powershell,
   processing,
-  properties,
   python,
   r,
   rib,
@@ -126,16 +108,12 @@ enum LanguageTypes {
   vbnet,
   vbscriptHtml,
   vbscript,
-  x86Asm,
   xml,
   xquery,
   yaml,
 }
 
 Map<LanguageTypes, dynamic> builtinLanguagesMap = {
-  LanguageTypes.ada: ada,
-  LanguageTypes.apache: apache,
-  LanguageTypes.arcade: arcade,
   LanguageTypes.arduino: arduino,
   LanguageTypes.bash: bash,
   LanguageTypes.basic: basic,
@@ -146,11 +124,9 @@ Map<LanguageTypes, dynamic> builtinLanguagesMap = {
   LanguageTypes.cpp: cpp,
   LanguageTypes.cs: cs,
   LanguageTypes.css: css,
-  LanguageTypes.d: d,
   LanguageTypes.dart: dart,
   LanguageTypes.delphi: delphi,
   LanguageTypes.django: django,
-  LanguageTypes.dos: dos,
   LanguageTypes.dsconfig: dsconfig,
   LanguageTypes.elixir: elixir,
   LanguageTypes.erlang: erlang,
@@ -168,7 +144,6 @@ Map<LanguageTypes, dynamic> builtinLanguagesMap = {
   LanguageTypes.makefile: makefile,
   LanguageTypes.markdown: markdown,
   LanguageTypes.matlab: matlab,
-  LanguageTypes.nginx: nginx,
   LanguageTypes.objectivec: objectivec,
   LanguageTypes.perl: perl,
   LanguageTypes.pgsql: pgsql,
@@ -176,7 +151,6 @@ Map<LanguageTypes, dynamic> builtinLanguagesMap = {
   LanguageTypes.plaintext: plaintext,
   LanguageTypes.powershell: powershell,
   LanguageTypes.processing: processing,
-  LanguageTypes.properties: properties,
   LanguageTypes.python: python,
   LanguageTypes.r: r,
   LanguageTypes.ruby: ruby,

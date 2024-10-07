@@ -1,8 +1,5 @@
 import 'actionscript.dart';
-import 'ada.dart';
-import 'apache.dart';
 import 'applescript.dart';
-import 'arcade.dart';
 import 'arduino.dart';
 import 'autoit.dart';
 import 'bash.dart';
@@ -14,11 +11,9 @@ import 'coffeescript.dart';
 import 'cpp.dart';
 import 'cs.dart';
 import 'css.dart';
-import 'd.dart';
 import 'dart.dart';
 import 'delphi.dart';
 import 'django.dart';
-import 'dos.dart';
 import 'dsconfig.dart';
 import 'elixir.dart';
 import 'erlang.dart';
@@ -39,7 +34,6 @@ import 'lua.dart';
 import 'makefile.dart';
 import 'markdown.dart';
 import 'matlab.dart';
-import 'nginx.dart';
 import 'objectivec.dart';
 import 'perl.dart';
 import 'pgsql.dart';
@@ -47,7 +41,6 @@ import 'php.dart';
 import 'plaintext.dart';
 import 'powershell.dart';
 import 'processing.dart';
-import 'properties.dart';
 import 'python.dart';
 import 'r.dart';
 import 'roboconf.dart';
@@ -72,10 +65,7 @@ import 'graphql.dart';
 
 final languages = {
   'actionscript': actionscript,
-  'ada': ada,
-  'apache': apache,
   'applescript': applescript,
-  'arcade': arcade,
   'arduino': arduino,
   'autoit': autoit,
   'bash': bash,
@@ -87,11 +77,9 @@ final languages = {
   'cpp': cpp,
   'cs': cs,
   'css': css,
-  'd': d,
   'dart': dart,
   'delphi': delphi,
   'django': django,
-  'dos': dos,
   'dsconfig': dsconfig,
   'elixir': elixir,
   'erlang': erlang,
@@ -112,7 +100,6 @@ final languages = {
   'makefile': makefile,
   'markdown': markdown,
   'matlab': matlab,
-  'nginx': nginx,
   'objectivec': objectivec,
   'perl': perl,
   'pgsql': pgsql,
@@ -120,7 +107,6 @@ final languages = {
   'plaintext': plaintext,
   'powershell': powershell,
   'processing': processing,
-  'properties': properties,
   'python': python,
   'r': r,
   'roboconf': roboconf,
