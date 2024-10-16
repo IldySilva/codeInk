@@ -67,7 +67,6 @@ enum LanguageTypes {
   dart,
   delphi,
   django,
-  dockerfile,
   dsconfig,
   elixir,
   erlang,
