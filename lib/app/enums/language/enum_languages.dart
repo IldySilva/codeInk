@@ -80,7 +80,6 @@ enum LanguageTypes {
   java,
   javascript,
   json,
-  julia,
   kotlin,
   lua,
   makefile,

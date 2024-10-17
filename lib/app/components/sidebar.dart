@@ -27,7 +27,7 @@ class AppToolBar extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('GetInk',
+                      Text('SnapInk',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,fontSize: 20)),
                       Text("Take a beautiful snap of your code")
