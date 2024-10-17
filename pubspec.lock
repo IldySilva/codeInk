@@ -150,6 +150,27 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_animate:
+    dependency: transitive
+    description:
+      name: flutter_animate
+      sha256: "7c8a6594a9252dad30cc2ef16e33270b6248c4dedc3b3d06c86c4f3f4dc05ae5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.5.0"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  flutter_shaders:
+    dependency: transitive
+    description:
+      name: flutter_shaders
+      sha256: "34794acadd8275d971e02df03afee3dee0f98dbfb8c4837082ad0034f612a3e2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.3"
   flutter_svg:
     dependency: transitive
     description:
@@ -208,6 +229,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.19.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -232,6 +261,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
+  lucide_icons_flutter:
+    dependency: transitive
+    description:
+      name: lucide_icons_flutter
+      sha256: c1b4250f23ab64e2db3c456db0633077aed7b2afd0dd4a6d3bb38c88cb3d666c
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.1"
   matcher:
     dependency: transitive
     description:
@@ -360,6 +397,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.8"
+  shadcn_ui:
+    dependency: "direct main"
+    description:
+      name: shadcn_ui
+      sha256: b9e6d23aed95b0f79ac138b1e5e214f829611d9130c776a2495cdea40372dc43
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.13.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -429,6 +474,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  two_dimensional_scrollables:
+    dependency: transitive
+    description:
+      name: two_dimensional_scrollables
+      sha256: "74ce1f35a8c74370b322049c9d00bf098938661e9f67054eae0f618e6dc0cb62"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.2"
   typed_data:
     dependency: transitive
     description:

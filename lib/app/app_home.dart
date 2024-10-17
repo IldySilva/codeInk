@@ -18,65 +18,61 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Flex(
-        direction: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Flexible(flex: 2, child: CodeToolBar()),
-          Expanded(
+      body: Builder(builder: (context) {
+        return Flex(
+          direction: Axis.horizontal,
+          children: [
+            Flexible(flex: 2, child: AppToolBar()),
+            Expanded(
               flex: 6,
-              child: Flex(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                direction: Axis.vertical,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0, top: 20),
-                    child: Text(
-                        "Turn your code into stunning prints in seconds.",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(color: Colors.white)),
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: SingleChildScrollView(
-                          child: CodeEditor(
-                        key: mainContainerKey,
-                      )),
+              child: Container(
+                color: Theme.of(context).colorScheme.secondaryContainer,
+                height: double.infinity,
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+
+                    Expanded(
+                      child: Container(child: Center(
+                        child: SingleChildScrollView(
+
+                            child: CodeEditor(
+                              key: mainContainerKey,
+                            )),
+                      ),)
                     ),
-                  ),
-                  AppBar(
-                    backgroundColor: Colors.transparent,
-                    primary: false,
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton.icon(
-                          label: const Text(
-                            "Made by ildeberto",
-                          ),
-                          icon: const Icon(FontAwesome.fire_solid),
-                          onPressed: () => launchDevProfile(),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        TextButton.icon(
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton.icon(
                             label: const Text(
-                              "Github",
+                              "Made by ildeberto",
                             ),
-                            icon: const Icon(FontAwesome.github_alt_brand),
-                            onPressed: () => launchGithub()),
-                      ],
-                    ),
-                  )
-                ],
-              )),
-        ],
-      ),
+                            icon: const Icon(FontAwesome.fire_solid),
+                            onPressed: () => launchDevProfile(),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          TextButton.icon(
+                              label: const Text(
+                                "Github",
+                              ),
+                              icon: const Icon(FontAwesome.github_alt_brand),
+                              onPressed: () => launchGithub()),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:print_script/app/app_theme.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 import 'app_home.dart';
 
@@ -9,9 +8,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ShadApp.material(
       title: 'KodeInk',
-      theme: AppTheme.themeData,
+      theme: ShadThemeData(
+        brightness: Brightness.dark,
+        colorScheme: const ShadSlateColorScheme.dark(),
+      ),
       home: HomePage(),
     );
   }

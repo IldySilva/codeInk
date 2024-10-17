@@ -4,88 +4,106 @@ import 'package:print_script/app/app_controller.dart';
 import 'package:print_script/app/enums/language/enum_languages.dart';
 import 'package:print_script/app/enums/editor_themes.dart';
 import 'package:print_script/app/widget_to_image_controller.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 import '../consts/const_default_gradients.dart';
 
-class CodeToolBar extends StatelessWidget {
-  CodeToolBar({super.key});
-  final Controller controller = Controller();
+class AppToolBar extends StatelessWidget {
+  AppToolBar({super.key});
+  final Controller _controller = Controller();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-      body: Padding(
+    return Container(
+      child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RichText(
-                text: const TextSpan(
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                    children: [
-                      TextSpan(text: 'Code'),
-                      TextSpan(
-                          text: 'Ink',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ]),
-              ),
+              padding: const EdgeInsets.only(top: 8.0, bottom: 16, left: 8),
+              child: Text('GetInk',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white)),
+            ),
+            Flex(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              direction: Axis.horizontal,
+              children: [
+                Text("Background"),
+                ValueListenableBuilder(
+                  builder: (context, value, _) {
+                    return Flexible(
+                      child: ShadSelect<GradientPalette>(
+                        initialValue: value,
+                        onChanged: (GradientPalette? newValue) {
+                          _controller.setColor(newValue!);
+                        },
+                        selectedOptionBuilder: (context, value) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                value.cleanName,
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              SizedBox(
+                                width: 4,
+                              ),
+                              Container(
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      gradient: LinearGradient(
+                                          colors: value.gradient)),
+                                  height: 16,
+                                  width: 50),
+                            ],
+                          );
+                        },
+                        options: GradientPalette.values.map((e) => ShadOption(
+                              value: e,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    e.cleanName,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                  SizedBox(
+                                    width: 4,
+                                  ),
+                                  Container(
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          gradient: LinearGradient(
+                                              colors: e.gradient)),
+                                      height: 16,
+                                      width: 16),
+                                ],
+                              ),
+                            )),
+                      ),
+                    );
+                  },
+                  valueListenable: Controller.backgroundColor,
+                ),
+              ],
             ),
             const SizedBox(
               height: 8,
             ),
-            ValueListenableBuilder(
-              builder: (context, value, _) {
-                return DropdownButtonFormField2<GradientPalette>(
-                  decoration: const InputDecoration(
-                    labelText: 'Background',
-                  ),
-                  isExpanded: true,
-                  value: value,
-                  onChanged: (GradientPalette? newValue) {
-                    controller.setColor(newValue!);
-                  },
-                  items: GradientPalette.values
-                      .map<DropdownMenuItem<GradientPalette>>(
-                          (GradientPalette theme) {
-                    return DropdownMenuItem<GradientPalette>(
-                      value: theme,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            theme.cleanName,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          Container(
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient:
-                                      LinearGradient(colors: theme.gradient)),
-                              height: 16,
-                              width: 16),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                );
-              },
-              valueListenable: Controller.backgroundColor,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Wrap(
-              crossAxisAlignment: WrapCrossAlignment.start,
-              alignment: WrapAlignment.start,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 for (GradientPalette gradient
                     in GradientPalette.values.getRange(0, 8))
                   Padding(
-                    padding: const EdgeInsets.only(left: 8.0, bottom: 8),
+                    padding:
+                        const EdgeInsets.only(left: 8.0, bottom: 8, right: 8),
                     child: InkWell(
                       onTap: () {
-                        controller.setColor(gradient);
+                        _controller.setColor(gradient);
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(4),
@@ -103,67 +121,78 @@ class CodeToolBar extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            ValueListenableBuilder(
-              builder: (context, value, _) {
-                return DropdownButtonFormField2<ThemeType>(
-                  decoration: const InputDecoration(
-                    labelText: "Theme",
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 2),
-                  ),
-                  isExpanded: true,
-                  value: value,
-                  onChanged: (ThemeType? newValue) {
-                    Controller.selectedTheme.value = newValue!;
+            Flex(
+              direction: Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Theme"),
+                ValueListenableBuilder(
+                  builder: (context, value, _) {
+                    return Flexible(
+                        child: ShadSelect<ThemeType>(
+                      initialValue: value,
+                      onChanged: (ThemeType? newValue) {
+                        Controller.selectedTheme.value = newValue!;
+                      },
+                      selectedOptionBuilder: (context, value) {
+                        return Text(
+                          value.cleanName,
+                          style: const TextStyle(color: Colors.white),
+                        );
+                      },
+                      options: ThemeType.values.map((e) => ShadOption(
+                            value: e,
+                            child: Text(
+                              e.cleanName,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          )),
+                    ));
                   },
-                  items: ThemeType.values
-                      .map<DropdownMenuItem<ThemeType>>((ThemeType theme) {
-                    return DropdownMenuItem<ThemeType>(
-                      value: theme,
-                      child: Text(theme.cleanName,
-                          style: const TextStyle(color: Colors.white)),
-                    );
-                  }).toList(),
-                );
-              },
-              valueListenable: Controller.selectedTheme,
+                  valueListenable: Controller.selectedTheme,
+                ),
+              ],
             ),
             const SizedBox(
-              height: 20,
+              height: 16,
             ),
-            ValueListenableBuilder(
-              builder: (context, value, _) {
-                return DropdownButtonFormField2<LanguageTypes>(
-                  decoration: const InputDecoration(
-                    labelText: "Language",
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 2),
-                  ),
-                  isExpanded: true,
-                  value: value,
-                  onChanged: (LanguageTypes? newValue) {
-                    Controller.selectedLanguage.value = newValue!;
-                    Controller.selectedTheme.notifyListeners();
+            Flex(
+              direction: Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Language"),
+                ValueListenableBuilder(
+                  builder: (context, value, _) {
+                    return Flexible(
+                        child: ShadSelect<LanguageTypes>(
+                      initialValue: value,
+                      onChanged: (LanguageTypes? newValue) {
+                        Controller.selectedLanguage.value = newValue!;
+                        Controller.selectedTheme.notifyListeners();
+                      },
+                      selectedOptionBuilder: (context, value) {
+                        return Text(
+                          value.cleanName,
+                          style: const TextStyle(color: Colors.white),
+                        );
+                      },
+                      options: LanguageTypes.values.map((e) => ShadOption(
+                            value: e,
+                            child: Text(
+                              e.cleanName,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          )),
+                    ));
                   },
-                  items: LanguageTypes.values
-                      .map<DropdownMenuItem<LanguageTypes>>(
-                          (LanguageTypes theme) {
-                    return DropdownMenuItem<LanguageTypes>(
-                      value: theme,
-                      child: Text(
-                        theme.cleanName,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    );
-                  }).toList(),
-                );
-              },
-              valueListenable: Controller.selectedLanguage,
+                  valueListenable: Controller.selectedLanguage,
+                ),
+              ],
             ),
             ValueListenableBuilder(
               builder: (context, value, _) {
                 return Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
+                  padding: const EdgeInsets.only(top: 8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -172,9 +201,12 @@ class CodeToolBar extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, color: Colors.white),
                       ),
-                      Switch(
-                          value: value,
-                          onChanged: (v) => controller.setShowLines(v))
+                      ShadSwitch(
+                        value: value,
+                        onChanged: (v) {
+                          _controller.setShowLines(v);
+                        },
+                      )
                     ],
                   ),
                 );
@@ -182,7 +214,7 @@ class CodeToolBar extends StatelessWidget {
               valueListenable: Controller.showLines,
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10.0),
+              padding: const EdgeInsets.only(top: 12.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -194,12 +226,12 @@ class CodeToolBar extends StatelessWidget {
                   ),
                   ValueListenableBuilder(
                     builder: (context, value, _) {
-                      return Slider.adaptive(
+                      return ShadSlider(
                           min: 0,
                           max: 100,
-                          value: value,
+                          controller: ShadSliderController(initialValue: value),
                           onChanged: (v) {
-                            controller.setPadding(v);
+                            _controller.setPadding(v);
                           });
                     },
                     valueListenable: Controller.padding,
@@ -208,7 +240,7 @@ class CodeToolBar extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10.0),
+              padding: const EdgeInsets.only(top: 12.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -220,12 +252,12 @@ class CodeToolBar extends StatelessWidget {
                   ),
                   ValueListenableBuilder(
                     builder: (context, value, _) {
-                      return Slider.adaptive(
+                      return ShadSlider(
                           min: 0.6,
                           max: 1,
-                          value: value,
+                          controller: ShadSliderController(initialValue: value),
                           onChanged: (v) {
-                            controller.setOpactivity(v);
+                            _controller.setOpactivity(v);
                           });
                     },
                     valueListenable: Controller.opactity,
@@ -234,7 +266,7 @@ class CodeToolBar extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10.0),
+              padding: const EdgeInsets.only(top: 12.0),
               child: Flex(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -249,11 +281,11 @@ class CodeToolBar extends StatelessWidget {
                   ),
                   ValueListenableBuilder(
                     builder: (context, value, _) {
-                      return Slider.adaptive(
+                      return ShadSlider(
                           min: 0,
                           max: 100,
-                          value: value,
-                          onChanged: (v) => controller.setBorderRadius(v));
+                          controller: ShadSliderController(initialValue: value),
+                          onChanged: (v) => _controller.setBorderRadius(v));
                     },
                     valueListenable: Controller.borderRadius,
                   )
@@ -263,49 +295,33 @@ class CodeToolBar extends StatelessWidget {
             const Expanded(child: SizedBox()),
             const Divider(),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MaterialButton(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    onPressed: () async {
-                      Controller().setLoading(true);
-                      await widgetsToImageController.capture();
-                      Controller().setLoading(false);
+                ShadButton(
+                  child: ValueListenableBuilder(
+                    builder: (context, value, _) {
+                      if (value)
+                        return Center(child: LinearProgressIndicator());
+                      return Text(
+                        "Export image",
+                      );
                     },
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: ValueListenableBuilder(
-                        builder: (context, value, _) {
-                          if (value)
-                            return Center(child: LinearProgressIndicator());
-                          return Text(
-                            "Export image",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          );
-                        },
-                        valueListenable: Controller.exporting,
-                      ),
-                    )),
-                MaterialButton(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    onPressed: () async {
-                      Controller().reset();
-                      ;
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Reset",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color:
-                                Theme.of(context).colorScheme.primaryContainer),
-                      ),
-                    )),
+                    valueListenable: Controller.exporting,
+                  ),
+                  onPressed: () async {
+                    Controller().setLoading(true);
+                    await widgetsToImageController.capture();
+                    Controller().setLoading(false);
+                  },
+                ),
+                ShadButton.secondary(
+                  onPressed: () {
+                    Controller().reset();
+                  },
+                  child: Text(
+                    "Reset",
+                  ),
+                ),
               ],
             ),
           ],
