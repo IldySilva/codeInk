@@ -38,7 +38,7 @@ class _CodeEditorState extends State<CodeEditor> {
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                           colors: Controller.backgroundColor.value.gradient)),
-                  duration: const Duration(milliseconds: 400),
+                  duration: const Duration(milliseconds: 300),
                   child: Stack(
                     children: [
                       ClipRRect(
