@@ -22,8 +22,8 @@ class Controller extends ChangeNotifier {
       ValueNotifier(ThemeType.dracula);
 
   static ValueNotifier<GradientPalette> backgroundColor =
-      ValueNotifier<GradientPalette>(GradientPalette.AquaSplash);
-  static ValueNotifier<double> padding = ValueNotifier(25);
+      ValueNotifier<GradientPalette>(GradientPalette.OceanBreeze);
+  static ValueNotifier<double> padding = ValueNotifier(60);
   static ValueNotifier<double> opactity = ValueNotifier(0.8);
   static ValueNotifier<bool> showLines = ValueNotifier(true);
   static ValueNotifier<double> borderRadius = ValueNotifier(20);
@@ -58,5 +58,6 @@ class Controller extends ChangeNotifier {
     notifyListeners();
   }
 
+  //TODO: Reset all the config values
   void reset() {}
 }

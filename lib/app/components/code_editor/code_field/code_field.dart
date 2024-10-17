@@ -204,7 +204,7 @@ class _CodeFieldState extends State<CodeField> {
     TextStyle textStyle,
   ) {
     final intrinsic = IntrinsicWidth(
-      child: Flexible(child: codeField),
+      child: codeField,
     );
 
     return Padding(

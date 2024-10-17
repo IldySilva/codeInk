@@ -20,9 +20,21 @@ class AppToolBar extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 16, left: 8),
-              child: Text('GetInk',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white)),
+              child: Row(
+                children: [
+                  Image.asset("assets/getink_icon.png",scale: 12,),
+                  SizedBox(width: 8,),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('GetInk',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,fontSize: 20)),
+                      Text("Take a beautiful snap of your code")
+                    ],
+                  ),
+                ],
+              ),
             ),
             Flex(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
