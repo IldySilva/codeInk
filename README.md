@@ -1,9 +1,9 @@
 
-# CodeInk – Turn Your Code into Stunning Visuals
+# SnapInk – Turn Your Code into Stunning Visuals
 
 ### ✨ **What is CodeInk?**
 
-**CodeInk** is a tool that transforms your code into **beautiful, print-ready images**. It allows developers to easily customize, share, and showcase their code with style.
+**SnapInk** is a tool that transforms your code into **beautiful, print-ready images**. It allows developers to easily customize, share, and showcase their code with style.
 
 ---
 
@@ -19,11 +19,11 @@
 
 ### 💻 **Getting Started Locally**
 
-To run **CodeInk** locally using Flutter Web, follow these steps:
+To run **SnapInk** locally using Flutter Web, follow these steps:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/ildysilva/CodeInk.git
+   git clone https://github.com/ildysilva/SnapInk.git
    cd CodeInk
    ```
 
@@ -64,5 +64,5 @@ To run **CodeInk** locally using Flutter Web, follow these steps:
 
 ### 💥 **Get Started Now**
 
-Show off your code with **CodeInk**—your code has never looked this good!
+Show off your code with **SnapInk**—your code has never looked this good!
 
