@@ -9,4 +9,4 @@ Function compose(List<Function> fns) {
   };
 }''';
 
-const githuburl="https://github.com/IldySilva/codeInk";
+const githuburl="https://github.com/IldySilva/SnapInk";
