@@ -1,4 +1,3 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:print_script/app/app_controller.dart';
 import 'package:print_script/app/enums/language/enum_languages.dart';
@@ -6,6 +5,7 @@ import 'package:print_script/app/enums/editor_themes.dart';
 import 'package:print_script/app/widget_to_image_controller.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import '../consts/const_default_gradients.dart';
+import '../enums/fonts.dart';
 
 class AppToolBar extends StatelessWidget {
   AppToolBar({super.key});
@@ -144,7 +144,7 @@ class AppToolBar extends StatelessWidget {
                         child: ShadSelect<ThemeType>(
                       initialValue: value,
                       onChanged: (ThemeType? newValue) {
-                        Controller.selectedTheme.value = newValue!;
+                        Controller().setTheme(newValue!);
                       },
                       selectedOptionBuilder: (context, value) {
                         return Text(
@@ -166,7 +166,7 @@ class AppToolBar extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: 16,
+              height: 8,
             ),
             Flex(
               direction: Axis.horizontal,
@@ -198,6 +198,43 @@ class AppToolBar extends StatelessWidget {
                     ));
                   },
                   valueListenable: Controller.selectedLanguage,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Flex(
+              direction: Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Font"),
+                ValueListenableBuilder(
+                  builder: (context, value, _) {
+                    return Flexible(
+                        child: ShadSelect<EditorFont>(
+                          initialValue: value,
+                          onChanged: (EditorFont? newValue) {
+
+                            Controller().setFont=newValue!;
+
+                          },
+                          selectedOptionBuilder: (context, value) {
+                            return Text(
+                              value.cleanName,
+                              style: const TextStyle(color: Colors.white),
+                            );
+                          },
+                          options: EditorFont.values.map((e) => ShadOption(
+                            value: e,
+                            child: Text(
+                              e.cleanName,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          )),
+                        ));
+                  },
+                  valueListenable: Controller.selectedFont,
                 ),
               ],
             ),
