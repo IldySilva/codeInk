@@ -6,14 +6,7 @@ import '../components/code_editor/code_theme/themes/androidstudio.dart';
 import '../components/code_editor/code_theme/themes/arduino-light.dart';
 import '../components/code_editor/code_theme/themes/arta.dart';
 import '../components/code_editor/code_theme/themes/ascetic.dart';
-import '../components/code_editor/code_theme/themes/atelier-cave-dark.dart';
-import '../components/code_editor/code_theme/themes/atelier-cave-light.dart';
-import '../components/code_editor/code_theme/themes/atelier-estuary-light.dart';
-import '../components/code_editor/code_theme/themes/atelier-forest-light.dart';
-import '../components/code_editor/code_theme/themes/atelier-heath-light.dart';
-import '../components/code_editor/code_theme/themes/atelier-plateau-dark.dart';
-import '../components/code_editor/code_theme/themes/atelier-savanna-dark.dart';
-import '../components/code_editor/code_theme/themes/atelier-sulphurpool-dark.dart';
+
 import '../components/code_editor/code_theme/themes/atom-one-dark-reasonable.dart';
 import '../components/code_editor/code_theme/themes/atom-one-dark.dart';
 import '../components/code_editor/code_theme/themes/atom-one-light.dart';
@@ -62,14 +55,7 @@ const Map<ThemeType, dynamic> themeMap = {
   ThemeType.arduinoLight: arduinoLightTheme,
   ThemeType.arta: artaTheme,
   ThemeType.ascetic: asceticTheme,
-  ThemeType.atelierCaveDark: atelierCaveDarkTheme,
-  ThemeType.atelierCaveLight: atelierCaveLightTheme,
-  ThemeType.atelierEstuaryLight: atelierEstuaryLightTheme,
-  ThemeType.atelierForestLight: atelierForestLightTheme,
-  ThemeType.atelierHeathLight: atelierHeathLightTheme,
-  ThemeType.atelierPlateauDark: atelierPlateauDarkTheme,
-  ThemeType.atelierSavannaDark: atelierSavannaDarkTheme,
-  ThemeType.atelierSulphurpoolDark: atelierSulphurpoolDarkTheme,
+
   ThemeType.atomOneDarkReasonable: atomOneDarkReasonableTheme,
   ThemeType.atomOneDark: atomOneDarkTheme,
   ThemeType.atomOneLight: atomOneLightTheme,
@@ -119,14 +105,7 @@ enum ThemeType {
   arduinoLight,
   arta,
   ascetic,
-  atelierCaveDark,
-  atelierCaveLight,
-  atelierEstuaryLight,
-  atelierForestLight,
-  atelierHeathLight,
-  atelierPlateauDark,
-  atelierSavannaDark,
-  atelierSulphurpoolDark,
+
   atomOneDarkReasonable,
   atomOneDark,
   atomOneLight,

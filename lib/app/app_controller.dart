@@ -74,5 +74,7 @@ class Controller extends ChangeNotifier {
   }
 
   //TODO: Reset all the config values
-  void reset() {}
+  void reset() {
+  }
+
 }

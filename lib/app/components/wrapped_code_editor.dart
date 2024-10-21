@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:print_script/app/consts/const_default_gradients.dart';
 import 'package:print_script/app/app_controller.dart';
 
 import 'package:print_script/app/components/sidebar.dart';
 import 'package:print_script/app/components/image_wrapper.dart';
+import 'package:print_script/app/enums/fonts.dart';
 import 'package:print_script/app/enums/language/enum_languages.dart';
 import 'package:print_script/app/enums/editor_themes.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 import 'code_editor/code_editor.dart';
 
@@ -47,26 +50,30 @@ class _CodeEditorState extends State<CodeEditor> {
                         child: ValueListenableBuilder(
                           builder: (context, theme, _) {
                             return CodeTheme(
-                                data: CodeThemeData(styles: theme.themeValue),
+                                data:
+                                    CodeThemeData(styles: theme.themeValue),
                                 child: AnimatedOpacity(
                                   opacity: Controller.opactity.value,
-                                  duration: const Duration(milliseconds: 300),
-                                  child: Builder(builder: (context) {
-                                    return CodeField(
-                                        onChanged: (x) => Controller.code = x,
-                                        wrap: true,
-                                        gutterStyle: GutterStyle(
-                                            showFoldingHandles: false,
-                                            showErrors: false,
-                                            showLineNumbers:
-                                                Controller.showLines.value),
-                                        controller: CodeController(
-                                            text: Controller.code,
-                                            language: Controller
-                                                .selectedLanguage
-                                                .value
-                                                .languageValue));
-                                  }),
+                                  duration:
+                                      const Duration(milliseconds: 300),
+                                  child: CodeField(
+                                      textStyle: Controller
+                                          .selectedFont.value
+                                          .getTextStyle(),
+                                      onChanged: (x) =>
+                                          Controller.code = x,
+                                      wrap: true,
+                                      gutterStyle: GutterStyle(
+                                          showFoldingHandles: false,
+                                          showErrors: false,
+                                          showLineNumbers:
+                                              Controller.showLines.value),
+                                      controller: CodeController(
+                                          text: Controller.code,
+                                          language: Controller
+                                              .selectedLanguage
+                                              .value
+                                              .languageValue)),
                                 ));
                           },
                           valueListenable: Controller.selectedTheme,

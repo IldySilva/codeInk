@@ -116,9 +116,7 @@ class CodeController extends TextEditingController {
   }
 
   void setLanguage(Mode? language) {
-    if (language == _language) {
-      return;
-    }
+
 
     if (language != null) {
       _languageId = language.hashCode.toString();
