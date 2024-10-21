@@ -20,7 +20,7 @@ class Controller extends ChangeNotifier {
   static String code = defaultCode;
   static var selectedFont = ValueNotifier(EditorFont.sourceCodePro);
   static var selectedLanguage = ValueNotifier(LanguageTypes.javascript);
-  static var selectedTheme = ValueNotifier(ThemeType.monokai);
+  static var selectedTheme = ValueNotifier(ThemeType.darcula);
 
   static ValueNotifier<GradientPalette> backgroundColor =
       ValueNotifier<GradientPalette>(GradientPalette.OceanBreeze);

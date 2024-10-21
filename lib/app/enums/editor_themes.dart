@@ -14,7 +14,6 @@ import '../components/code_editor/code_theme/themes/codepen-embed.dart';
 import '../components/code_editor/code_theme/themes/color-brewer.dart';
 import '../components/code_editor/code_theme/themes/darcula.dart';
 import '../components/code_editor/code_theme/themes/dark.dart';
-import '../components/code_editor/code_theme/themes/default.dart';
 import '../components/code_editor/code_theme/themes/docco.dart';
 import '../components/code_editor/code_theme/themes/dracula.dart';
 import '../components/code_editor/code_theme/themes/github.dart';
@@ -26,7 +25,6 @@ import '../components/code_editor/code_theme/themes/hopscotch.dart';
 import '../components/code_editor/code_theme/themes/idea.dart';
 import '../components/code_editor/code_theme/themes/ir-black.dart';
 import '../components/code_editor/code_theme/themes/lightfair.dart';
-import '../components/code_editor/code_theme/themes/magula.dart';
 import '../components/code_editor/code_theme/themes/mono-blue.dart';
 import '../components/code_editor/code_theme/themes/monokai-sublime.dart';
 import '../components/code_editor/code_theme/themes/monokai.dart';
@@ -35,7 +33,6 @@ import '../components/code_editor/code_theme/themes/obsidian.dart';
 import '../components/code_editor/code_theme/themes/ocean.dart';
 import '../components/code_editor/code_theme/themes/paraiso-dark.dart';
 import '../components/code_editor/code_theme/themes/pojoaque.dart';
-import '../components/code_editor/code_theme/themes/purebasic.dart';
 import '../components/code_editor/code_theme/themes/rainbow.dart';
 import '../components/code_editor/code_theme/themes/school-book.dart';
 import '../components/code_editor/code_theme/themes/solarized-dark.dart';
@@ -63,7 +60,6 @@ const Map<ThemeType, dynamic> themeMap = {
   ThemeType.colorBrewer: colorBrewerTheme,
   ThemeType.darcula: darculaTheme,
   ThemeType.dark: darkTheme,
-  ThemeType.defaultTheme: defaultTheme,
   ThemeType.docco: doccoTheme,
   ThemeType.dracula: draculaTheme,
   ThemeType.github: githubTheme,
@@ -75,7 +71,6 @@ const Map<ThemeType, dynamic> themeMap = {
   ThemeType.idea: ideaTheme,
   ThemeType.irBlack: irBlackTheme,
   ThemeType.lightfair: lightfairTheme,
-  ThemeType.magula: magulaTheme,
   ThemeType.monoBlue: monoBlueTheme,
   ThemeType.monokaiSublime: monokaiSublimeTheme,
   ThemeType.monokai: monokaiTheme,
@@ -84,7 +79,6 @@ const Map<ThemeType, dynamic> themeMap = {
   ThemeType.ocean: oceanTheme,
   ThemeType.paraisoDark: paraisoDarkTheme,
   ThemeType.pojoaque: pojoaqueTheme,
-  ThemeType.purebasic: purebasicTheme,
   ThemeType.rainbow: rainbowTheme,
   ThemeType.schoolBook: schoolBookTheme,
   ThemeType.solarizedDark: solarizedDarkTheme,
@@ -113,7 +107,6 @@ enum ThemeType {
   colorBrewer,
   darcula,
   dark,
-  defaultTheme,
   docco,
   dracula,
   github,
@@ -125,7 +118,6 @@ enum ThemeType {
   idea,
   irBlack,
   lightfair,
-  magula,
   monoBlue,
   monokaiSublime,
   monokai,
@@ -134,7 +126,6 @@ enum ThemeType {
   ocean,
   paraisoDark,
   pojoaque,
-  purebasic,
   rainbow,
   schoolBook,
   solarizedDark,
