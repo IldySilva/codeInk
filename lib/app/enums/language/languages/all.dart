@@ -25,7 +25,6 @@ import 'groovy.dart';
 import 'haskell.dart';
 import 'java.dart';
 import 'javascript.dart';
-import 'json.dart';
 import 'kotlin.dart';
 import 'lisp.dart';
 import 'livecodeserver.dart';
@@ -91,7 +90,6 @@ final languages = {
   'haskell': haskell,
   'java': java,
   'javascript': javascript,
-  'json': json,
   'kotlin': kotlin,
   'lisp': lisp,
   'livecodeserver': livecodeserver,
