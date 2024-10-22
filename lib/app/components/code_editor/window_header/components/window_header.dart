@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class WindowHeader extends StatelessWidget {
   const WindowHeader({super.key});
 
-  final backgroundColor = const Color(0xff262626);
   final windowSize = 50.0;
   final redColor = const Color(0xffff5f57);
   final yellowColor = const Color(0xfffebc2e);
@@ -14,7 +13,7 @@ class WindowHeader extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: windowSize,
-      color: backgroundColor,
+      color: Colors.black.withOpacity(0.09),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
