@@ -114,7 +114,6 @@ class _CodeFieldState extends State<CodeField> {
     super.initState();
 
     widget.controller.addListener(_onTextChanged);
-    widget.controller.addListener(_updatePopupOffset);
 
     _horizontalCodeScroll = ScrollController();
     _focusNode = widget.focusNode ?? FocusNode();
@@ -137,7 +136,6 @@ class _CodeFieldState extends State<CodeField> {
   @override
   void dispose() {
     widget.controller.removeListener(_onTextChanged);
-    widget.controller.removeListener(_updatePopupOffset);
     _searchPopup?.remove();
     _searchPopup = null;
     _numberScroll?.dispose();
@@ -150,10 +148,8 @@ class _CodeFieldState extends State<CodeField> {
   void didUpdateWidget(covariant CodeField oldWidget) {
     super.didUpdateWidget(oldWidget);
     oldWidget.controller.removeListener(_onTextChanged);
-    oldWidget.controller.removeListener(_updatePopupOffset);
 
     widget.controller.addListener(_onTextChanged);
-    widget.controller.addListener(_updatePopupOffset);
   }
 
   void rebuild() {
@@ -266,12 +262,12 @@ class _CodeFieldState extends State<CodeField> {
     );
 
     return Container(
-      width: double.infinity,
       decoration: widget.decoration,
       color: _backgroundCol,
       key: _codeFieldKey,
       child: IntrinsicWidth(
         child: Column(
+
           children: [
             WindowHeader(),
             Padding(
@@ -320,49 +316,5 @@ class _CodeFieldState extends State<CodeField> {
     );
   }
 
-  void _updatePopupOffset() {}
 
-  TextPainter _getTextPainter(String text) {
-    return TextPainter(
-      textDirection: TextDirection.ltr,
-      text: TextSpan(text: text, style: textStyle),
-    )..layout();
-  }
-
-  Offset _getCaretOffset(TextPainter textPainter) {
-    return textPainter.getOffsetForCaret(
-      widget.controller.selection.base,
-      Rect.zero,
-    );
-  }
-
-  double _getCaretHeight(TextPainter textPainter) {
-    final double? caretFullHeight = textPainter.getFullHeightForCaret(
-      widget.controller.selection.base,
-      Rect.zero,
-    );
-    return caretFullHeight ?? 0;
-  }
-
-  double _getPopupLeftOffset(TextPainter textPainter) {
-    return max(
-      _getCaretOffset(textPainter).dx +
-          widget.padding.left -
-          _horizontalCodeScroll!.offset +
-          (_editorOffset?.dx ?? 0),
-      0,
-    );
-  }
-
-  double _getPopupTopOffset(TextPainter textPainter, double caretHeight) {
-    return max(
-      _getCaretOffset(textPainter).dy +
-          caretHeight +
-          16 +
-          widget.padding.top -
-          _codeScroll!.offset +
-          (_editorOffset?.dy ?? 0),
-      0,
-    );
-  }
 }
