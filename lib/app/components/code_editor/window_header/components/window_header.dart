@@ -34,7 +34,6 @@ class WindowHeader extends StatelessWidget {
     );
   }
 
-  // Círculo preenchido com cor
   Widget buildCircle(Color color) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
