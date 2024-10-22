@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../window_header/window_header.dart';
 import '../code_theme/code_theme.dart';
 import '../gutter/gutter.dart';
 import '../line_numbers/gutter_style.dart';
@@ -265,17 +266,25 @@ class _CodeFieldState extends State<CodeField> {
     );
 
     return Container(
+      width: double.infinity,
       decoration: widget.decoration,
       color: _backgroundCol,
       key: _codeFieldKey,
-      padding: const EdgeInsets.only(left: 8),
       child: IntrinsicWidth(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
           children: [
-            if (widget.gutterStyle.showGutter) _buildGutter(),
-            Expanded(key: _editorKey, child: editingField),
+            WindowHeader(),
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (widget.gutterStyle.showGutter) _buildGutter(),
+                  Expanded(key: _editorKey, child: editingField),
+                ],
+              ),
+            ),
           ],
         ),
       ),
