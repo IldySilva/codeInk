@@ -13,7 +13,7 @@ class App extends StatelessWidget {
       title: 'SnapInk',
       theme: ShadThemeData(
         brightness: Brightness.dark,
-        colorScheme: const ShadSlateColorScheme.light(),
+        colorScheme: const ShadSlateColorScheme.dark(),
       ),
       home: HomePage(),
     );
